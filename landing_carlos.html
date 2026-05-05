@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emmanuel Lara | Protección Familiar</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1C2B3A;
+    --navy-mid: #243447;
+    --cream: #F7F4EF;
+    --blue-accent: #2E6DA4;
+    --blue-light: #4A8EC2;
+    --warm-gray: #6B6B6B;
+    --light-bg: #EEF2F7;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--navy);
+    padding: 10px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.02em;
+  }
+
+  .topbar strong { color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--blue-accent), transparent);
+  }
+
+  .avatar-wrap {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--blue-accent);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.1s;
+  }
+
+  .avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(30px, 5.5vw, 52px);
+    font-weight: 900;
+    line-height: 1.2;
+    color: #fff;
+    max-width: 660px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.35s;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--blue-light);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.65);
+    max-width: 460px;
+    line-height: 1.65;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--blue-accent);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 36px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.65s;
+    letter-spacing: 0.01em;
+  }
+
+  .cta-btn:hover {
+    background: var(--blue-light);
+    transform: translateY(-2px);
+  }
+
+  .cta-btn svg { width: 20px; height: 20px; fill: #fff; }
+
+  .cta-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 36px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: border-color 0.25s, background 0.25s;
+  }
+
+  .cta-btn-outline:hover {
+    border-color: var(--blue-light);
+    background: rgba(78,142,194,0.1);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.9s;
+  }
+
+  .scroll-hint span {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .scroll-arrow {
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-arrow svg { width: 12px; height: 12px; stroke: rgba(255,255,255,0.4); fill: none; }
+
+  /* ── PREGUNTA ESPEJO ── */
+  .mirror {
+    background: var(--cream);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .mirror-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .mirror h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 32px;
+  }
+
+  .mirror h2 em {
+    font-style: italic;
+    color: var(--blue-accent);
+  }
+
+  .scenario-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+    margin-bottom: 32px;
+  }
+
+  .scenario-card {
+    background: #fff;
+    border: 1px solid #DDE3EC;
+    border-left: 4px solid var(--blue-accent);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    font-size: 15px;
+    color: var(--navy);
+    line-height: 1.55;
+  }
+
+  .scenario-card strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue-accent);
+    margin-bottom: 6px;
+  }
+
+  .mirror-punch {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--navy);
+    line-height: 1.4;
+  }
+
+  /* ── BRECHA ── */
+  .gap {
+    background: var(--navy);
+    padding: 70px 24px;
+    text-align: center;
+  }
+
+  .gap-inner {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .gap-tag {
+    display: inline-block;
+    background: rgba(46,109,164,0.3);
+    color: var(--blue-light);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  .gap h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.35;
+    margin-bottom: 16px;
+  }
+
+  .gap p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+  }
+
+  /* ── PROPUESTA ── */
+  .prop {
+    background: var(--light-bg);
+    padding: 80px 24px;
+  }
+
+  .prop-inner {
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-accent);
+    margin-bottom: 14px;
+  }
+
+  .prop h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .prop-sub {
+    font-size: 16px;
+    color: var(--warm-gray);
+    line-height: 1.65;
+    margin-bottom: 40px;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    background: #fff;
+    border: 1px solid #DDE3EC;
+    border-radius: 8px;
+    padding: 22px 22px;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+
+  .step-num {
+    min-width: 40px;
+    height: 40px;
+    background: var(--blue-accent);
+    color: #fff;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: 'Fraunces', serif;
+  }
+
+  .step-text strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .step-text span {
+    font-size: 14px;
+    color: var(--warm-gray);
+    line-height: 1.55;
+  }
+
+  /* ── PARA QUIÉN ── */
+  .forwhom {
+    background: var(--cream);
+    padding: 80px 24px;
+  }
+
+  .forwhom-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .forwhom h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 32px;
+  }
+
+  .checks {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 16px;
+    color: var(--navy);
+    line-height: 1.5;
+  }
+
+  .check-icon {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    background: var(--blue-accent);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .check-icon svg {
+    width: 13px;
+    height: 13px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2.5;
+  }
+
+  /* ── BIO ── */
+  .bio {
+    background: var(--navy-mid);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .bio-inner {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .bio-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--blue-accent);
+    margin: 0 auto 20px;
+  }
+
+  .bio-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .blue-line {
+    width: 40px;
+    height: 2px;
+    background: var(--blue-accent);
+    margin: 0 auto 24px;
+    border-radius: 2px;
+  }
+
+  .bio h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .bio p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  /* ── CTA FINAL ── */
+  .final-cta {
+    background: var(--cream);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .final-cta-inner {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .final-cta h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .final-cta h2 em {
+    font-style: italic;
+    color: var(--blue-accent);
+  }
+
+  .final-cta p {
+    font-size: 16px;
+    color: var(--warm-gray);
+    line-height: 1.65;
+    margin-bottom: 36px;
+  }
+
+  .cta-note {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--warm-gray);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    padding: 24px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(5px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">Asesoría sin costo · Sin compromiso · <strong>Respuesta en menos de 24 horas</strong></div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="avatar-wrap">
+    <img src="https://emmanuellara.carrd.co/assets/images/image01.jpg?v=6c0e5aaf" alt="Emmanuel Lara" onerror="this.parentElement.style.background='#2E6DA4';this.style.display='none'">
+  </div>
+  <p class="label">Emmanuel Lara &nbsp;|&nbsp; Asesoría Patrimonial · GNP</p>
+  <h1>Trabajas todos los días para que a tu familia no le falte nada.<br><em>¿Pero qué pasa si tú faltas?</em></h1>
+  <p class="hero-sub">Te ayudo a convertir tu ingreso de hoy en el respaldo real de tu familia mañana — con un plan claro, sin tecnicismos y sin letra chica.</p>
+  <a href="https://wa.me/529991234567" class="cta-btn">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.549 4.105 1.51 5.833L.057 23.776l6.094-1.598A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.821 9.821 0 0 1-5.006-1.371l-.359-.214-3.722.976.993-3.63-.234-.373A9.821 9.821 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+    Quiero proteger a mi familia
+  </a>
+  <div class="scroll-hint">
+    <span>Continúa</span>
+    <div class="scroll-arrow">
+      <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ── ESPEJO ── -->
+<section class="mirror">
+  <div class="mirror-inner">
+    <h2>El seguro de tu empresa<br>no es <em>tu</em> plan de protección.</h2>
+    <div class="scenario-cards">
+      <div class="scenario-card">
+        <strong>Si cambias de trabajo</strong>
+        Tu seguro corporativo desaparece. Tu familia queda sin cobertura desde el primer día fuera.
+      </div>
+      <div class="scenario-card">
+        <strong>Si te incapacitan</strong>
+        El IMSS cubre una fracción de tu sueldo. El resto de tus gastos no esperan.
+      </div>
+      <div class="scenario-card">
+        <strong>Si falleces</strong>
+        ¿Tu familia sabe exactamente qué tienes, dónde está y cómo acceder? ¿El monto alcanza para lo que necesitan?
+      </div>
+    </div>
+    <p class="mirror-punch">"El mejor momento para proteger a tu familia fue hace 10 años.<br>El segundo mejor momento es hoy."</p>
+  </div>
+</section>
+
+<!-- ── BRECHA ── -->
+<section class="gap">
+  <div class="gap-inner">
+    <span class="gap-tag">Lo que muchos no saben</span>
+    <h2>El seguro de tu empresa cubre mientras trabajas ahí.<br>Tu protección no puede depender de tu empleador.</h2>
+    <p>Un plan patrimonial personal no es un lujo — es la diferencia entre que tu familia mantenga su nivel de vida o tenga que empezar de cero. No necesitas ser experto en finanzas. Solo necesitas a alguien que te lo explique con honestidad y te ayude a dar el primer paso.</p>
+  </div>
+</section>
+
+<!-- ── PROPUESTA ── -->
+<section class="prop">
+  <div class="prop-inner">
+    <p class="section-label">Así trabajo contigo</p>
+    <h2>Un plan claro, paso a paso,<br>sin complicaciones.</h2>
+    <p class="prop-sub">En una llamada de diagnóstico, revisamos lo que tienes y lo que te falta. Sin tecnicismos, sin letra chica. Solo claridad.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Diagnóstico honesto de tu situación actual</strong>
+          <span>Revisamos qué cubre realmente tu seguro corporativo, qué tienes en IMSS y dónde están los huecos. Sin juicios.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Te explico exactamente qué necesitas y por qué</strong>
+          <span>Sin tecnicismos. Sin presión. Con comparaciones concretas: cuánto cuesta tenerlo vs. cuánto cuesta no tenerlo.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Construimos juntos un plan que tú puedes sostener</strong>
+          <span>Tomando en cuenta tu ingreso, tu familia y tus metas. Nada que no tenga sentido para ti.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <strong>Tú decides. Yo te acompaño.</strong>
+          <span>La firma es tuya. Yo me aseguro de que entiendas exactamente qué estás contratando y por qué.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARA QUIÉN ── -->
+<section class="forwhom">
+  <div class="forwhom-inner">
+    <p class="section-label">¿Esto es para ti?</p>
+    <h2>Si alguna de estas te describe,<br>esta asesoría es para ti:</h2>
+    <div class="checks">
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <span>Tienes familia y no quieres que dependan de la suerte si algo te pasa</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <span>Tu único seguro es el de la empresa y nunca has revisado qué tan completo es</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <span>Quieres que tus hijos puedan elegir su universidad por vocación, no por precio</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <span>Piensas en el retiro pero no has tomado acciones concretas todavía</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <span>Sabes que "ya deberías haber hecho esto" y no quieres esperar un año más</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BIO ── -->
+<section class="bio">
+  <div class="bio-inner">
+    <div class="bio-avatar">
+      <img src="https://emmanuellara.carrd.co/assets/images/image01.jpg?v=6c0e5aaf" alt="Emmanuel Lara" onerror="this.parentElement.style.background='#2E6DA4';this.style.display='none'">
+    </div>
+    <div class="blue-line"></div>
+    <h2>Soy Emmanuel Lara,<br>asesor patrimonial y de seguros GNP.</h2>
+    <p>Mi trabajo no es venderte un seguro. Es ayudarte a entender exactamente qué tienes, qué te falta y cómo resolverlo — con honestidad, sin tecnicismos y respetando tu tiempo. Trabajo con familias que quieren tomar la decisión correcta, no la más rápida.</p>
+    <a href="https://wa.me/529991234567" class="cta-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.549 4.105 1.51 5.833L.057 23.776l6.094-1.598A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.821 9.821 0 0 1-5.006-1.371l-.359-.214-3.722.976.993-3.63-.234-.373A9.821 9.821 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+      Agendar mi diagnóstico sin costo
+    </a>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <h2>Trabaja para que a tu familia<br>no le falte nada.<br><em>Con o sin ti.</em></h2>
+    <p>Una conversación de 30 minutos puede darte la claridad que has postergado por años. Sin compromiso, sin presión. Solo información honesta para que puedas tomar la mejor decisión.</p>
+    <a href="https://wa.me/529991234567" class="cta-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.549 4.105 1.51 5.833L.057 23.776l6.094-1.598A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.821 9.821 0 0 1-5.006-1.371l-.359-.214-3.722.976.993-3.63-.234-.373A9.821 9.821 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+      Quiero mi plan de protección familiar
+    </a>
+    <p class="cta-note">Diagnóstico sin costo · Sin compromiso · Por WhatsApp</p>
+  </div>
+</section>
+
+<footer>
+  Emmanuel Lara · Asesor Patrimonial y de Seguros GNP · Mérida, Yucatán
+</footer>
+
+</body>
+</html>
