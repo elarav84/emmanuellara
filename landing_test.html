@@ -408,6 +408,7 @@
     .final .btn:hover { background: var(--ivory); }
 
     @media (max-width: 980px) {
+      .container {width: 90%;}
       .header-inner { min-height: 82px; }
       .nav-links { display: none; }
       .mark { font-size: 2.75rem; min-width: 52px; }
@@ -434,8 +435,12 @@
         object-position: center 18%;
         box-shadow: none;
       }
-      .hero-copy { padding: 44px 0 56px; }
-      h1 { font-size: clamp(3.05rem, 12.5vw, 4.7rem); }
+      .hero-copy { padding: 48px 0 56px; }
+      h1 {
+  font-size: clamp(2.65rem, 10.8vw, 4.1rem);
+  line-height: 0.98;
+  max-width: 100%;
+}
       h2 { font-size: clamp(2.45rem, 10vw, 3.65rem); }
       .hero-sub { font-size: 1rem; margin: 24px 0 22px; }
       .btn { width: 100%; padding: 18px 22px; }
