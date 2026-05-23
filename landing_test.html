@@ -112,19 +112,17 @@
       display: none;
     }
 
-    /* ESTRUCTURA HERO BLINDADA */
+    /* SECCIÓN HERO OPTIMIZADA PARA COMPUTADORA */
     .hero {
       position: relative;
       overflow: hidden;
       background:
         radial-gradient(circle at 86% 18%, rgba(183,154,107,.16), transparent 20%),
         linear-gradient(110deg, #FAF7F3 0%, #FAF7F3 44%, #EDE4D7 100%);
-      margin-top: 0;
-      padding-top: 0;
     }
 
     .hero-grid {
-      min-height: 680px;
+      height: 640px; /* Forzamos altura fija en PC para controlar proporciones */
       display: grid;
       grid-template-columns: 1fr .92fr;
       grid-template-areas: "copy photo";
@@ -134,25 +132,26 @@
 
     .hero-copy { 
       grid-area: copy;
-      padding: 72px 0; 
+      padding: 40px 0; 
     }
 
     .hero-photo {
       grid-area: photo;
       align-self: end;
       position: relative;
-      min-height: 630px;
+      height: 100%;
+      width: 100%;
     }
 
     .hero-photo img {
       position: absolute;
       right: -10px;
       bottom: 0;
-      width: min(520px, 100%);
-      height: 640px;
+      width: min(480px, 100%);
+      height: 590px; /* Calibración exacta en PC */
       object-fit: cover;
       object-position: center top;
-      border-radius: 22px 22px 0 0;
+      border-radius: 18px 18px 0 0;
       box-shadow: var(--shadow);
     }
 
@@ -173,7 +172,7 @@
       letter-spacing: -.045em;
     }
 
-    h1 { font-size: clamp(4.2rem, 7vw, 6.3rem); max-width: 690px; }
+    h1 { font-size: clamp(3.8rem, 5.5vw, 5.5rem); max-width: 690px; }
     h2 { font-size: clamp(2.7rem, 4.4vw, 4.25rem); }
     h3 { font-size: 1.55rem; }
     .gold { color: var(--brass); }
@@ -181,7 +180,7 @@
     p { margin: 0; color: var(--muted); }
 
     .hero-sub {
-      margin: 28px 0 26px;
+      margin: 24px 0 24px;
       max-width: 560px;
       font-size: 1.08rem;
     }
@@ -190,7 +189,7 @@
       display: flex;
       align-items: flex-start;
       gap: 16px;
-      margin: 30px 0 32px;
+      margin: 24px 0 28px;
       text-transform: uppercase;
       font-size: .86rem;
       letter-spacing: .065em;
@@ -316,6 +315,7 @@
     .problem-card .svg-icon { margin-bottom: 20px; }
     .problem-card p { color: var(--ink); font-size: .96rem; line-height: 1.45; }
 
+    /* SECCIÓN BIO CALIBRADA INDEPENDIENTE */
     .bio-grid {
       display: grid;
       grid-template-columns: .9fr 1fr;
@@ -328,11 +328,12 @@
       border-radius: 16px;
       box-shadow: var(--shadow);
       background: var(--ivory);
+      width: 100%;
     }
 
     .bio-photo img {
       width: 100%;
-      height: 470px;
+      height: 520px; /* Control estricto de proporción en PC */
       object-fit: cover;
       object-position: center 18%;
     }
@@ -453,14 +454,12 @@
     .final .btn { background: var(--brass); color: var(--green-900); }
     .final .btn:hover { background: var(--ivory); }
 
-    /* CORECCIÓN RESPONSIVA EXCLUSIVA MEDIANTE GRID AREAS */
+    /* ESTILOS EXCLUSIVOS RESPONSIVOS PARA MOBILE (TOTALMENTE AISLADOS) */
     @media (max-width: 980px) {
       .container { width: min(90%, 390px); margin: 0 auto; }
       .header-inner { min-height: 82px; gap: 12px; }
       
-      .header-cta {
-        display: none;
-      }
+      .header-cta { display: none; }
 
       .header-mobile-icon {
         display: inline-flex;
@@ -478,7 +477,6 @@
       .brand-title { font-size: 1.15rem; }
       .brand-subtitle { font-size: .58rem; letter-spacing: .12em; margin-top: 4px; }
 
-      /* El Grid fuerza el acomodo visual exacto en móvil */
       .hero-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -489,15 +487,16 @@
         width: 100vw;
         max-width: 100vw;
         margin-left: calc(-50vw + 50%);
+        height: auto;
         min-height: auto;
       }
 
-      /* La foto se ancla arriba del todo sin espacio residual */
       .hero-photo {
         grid-area: photo;
         display: block;
         width: 100vw;
         max-width: 100vw;
+        height: 380px;
         min-height: 380px;
         margin: 0;
         padding: 0;
@@ -515,7 +514,6 @@
         padding: 0;
       }
 
-      /* El texto fluye abajo de la imagen de forma limpia */
       .hero-copy {
         grid-area: copy;
         width: min(90%, 390px);
@@ -524,54 +522,18 @@
         padding: 42px 0 52px;
       }
 
-      h1 {
-        font-size: clamp(2.3rem, 9.5vw, 3.1rem);
-        line-height: 1.1;
-        max-width: 100%;
-      }
-
+      h1 { font-size: clamp(2.3rem, 9.5vw, 3.1rem); line-height: 1.1; max-width: 100%; }
       h2 { font-size: clamp(2.3rem, 9.5vw, 3.4rem); }
+      .kicker { font-size: .68rem; letter-spacing: .12em; margin-bottom: 16px; }
+      .hero-sub { font-size: .98rem; margin: 20px 0 22px; line-height: 1.5; }
 
-      .kicker {
-        font-size: .68rem;
-        letter-spacing: .12em;
-        margin-bottom: 16px;
-      }
-
-      .hero-sub {
-        font-size: .98rem;
-        margin: 20px 0 22px;
-        line-height: 1.5;
-      }
-
-      .btn {
-        width: 100%;
-        padding: 20px 22px;
-        justify-content: center;
-        text-align: center;
-      }
-
-      .btn small {
-        margin-top: 5px;
-      }
+      .btn { width: 100%; padding: 20px 22px; justify-content: center; text-align: center; }
+      .btn small { margin-top: 5px; }
 
       .trust { padding: 26px 0; }
       .trust-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-
-      .trust-card {
-        border-right: 0;
-        border-bottom: 0;
-        padding: 12px 6px;
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 8px;
-      }
-      
-      .trust-card .svg-icon {
-        width: 28px;
-        height: 28px;
-      }
-
+      .trust-card { border-right: 0; border-bottom: 0; padding: 12px 6px; align-items: flex-start; flex-direction: column; gap: 8px; }
+      .trust-card .svg-icon { width: 28px; height: 28px; }
       .trust-card span { font-size: .80rem; }
 
       section { padding: 58px 0; }
@@ -579,18 +541,11 @@
       .problem-grid, .bio-grid, .approach, .steps, .final-grid { grid-template-columns: 1fr; }
       .problem-grid { gap: 14px; }
 
-      .problem-card {
-        min-height: auto;
-        display: flex;
-        gap: 16px;
-        align-items: center;
-        padding: 20px;
-        border-radius: 14px;
-      }
-
+      .problem-card { min-height: auto; display: flex; gap: 16px; align-items: center; padding: 20px; border-radius: 14px; }
       .problem-card .svg-icon { margin-bottom: 0; width: 28px; height: 28px; }
+      
       .bio-grid { gap: 32px; }
-      .bio-photo img { height: 400px; }
+      .bio-photo img { height: 400px; width: 100%; }
       .approach-copy { padding: 54px 8%; }
       .approach-visual { min-height: 260px; }
       .steps { gap: 32px; margin-top: 42px; }
@@ -650,7 +605,7 @@
     <section id="servicios">
       <div class="container section-head"><h2>El costo de la incertidumbre</h2><div class="rule"></div></div>
       <div class="container problem-grid">
-        <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0L20 8l-8-6-8 6Z"/></svg><p>Tu negocio e ingresos dependen enteramente de tu operation diaria.</p></div>
+        <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0L20 8l-8-6-8 6Z"/></svg><p>Tu negocio e ingresos dependen enteramente de tu operación diaria.</p></div>
         <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><p>No existe un plan de contingencia para que tu familia tome decisiones.</p></div>
         <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><p>Las finanzas del negocio corporativo y las personales están mezcladas.</p></div>
         <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><p>Falta optimización fiscal legal para robustecer tu flujo y retiro.</p></div>
