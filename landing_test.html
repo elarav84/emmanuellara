@@ -3,56 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emmanuel Lara | Asesoría Patrimonial</title>
+  <title>Emmanuel Lara | Asesor Patrimonial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --deep-green: #1F2E23;
-      --deep-green-2: #142019;
-      --moss-green: #475940;
-      --warm-ivory: #E9E3D6;
-      --cream: #FAF7F3;
-      --aged-brass: #B79A6B;
-      --soft-gold: #C5A46F;
+      --green-900: #142019;
+      --green-800: #1F2E23;
+      --green-600: #475940;
+      --cream-100: #FAF7F3;
+      --cream-200: #F1EADF;
+      --ivory: #E9E3D6;
+      --brass: #B79A6B;
+      --brass-soft: #C7AB7A;
       --ink: #16221A;
-      --muted: #5B6557;
-      --white-soft: #FFFDF9;
-      --line: rgba(183,154,107,0.38);
-      --max-width: 1180px;
+      --muted: #667062;
+      --line: rgba(183,154,107,.28);
+      --card: rgba(255,253,249,.74);
+      --shadow: 0 22px 60px rgba(20,32,25,.10);
+      --max: 1160px;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
-      background: var(--cream);
+      font-family: Inter, system-ui, sans-serif;
       color: var(--ink);
-      font-family: 'Inter', sans-serif;
-      line-height: 1.55;
+      background: var(--cream-100);
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
-    img { max-width: 100%; display: block; }
+    img { display: block; max-width: 100%; }
     a { color: inherit; }
+    .container { width: min(var(--max), 91%); margin: 0 auto; }
 
-    .container {
-      width: min(var(--max-width), 91%);
-      margin: 0 auto;
-    }
-
-    .nav {
-      position: absolute;
+    .site-header {
+      position: sticky;
       top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 10;
-      padding: 22px 0;
+      z-index: 50;
+      background: rgba(250,247,243,.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(183,154,107,.16);
     }
 
-    .nav-inner {
+    .header-inner {
+      min-height: 86px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -62,747 +60,520 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       text-decoration: none;
     }
 
-    .monogram {
+    .mark {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.65rem;
-      line-height: 0.85;
-      color: var(--aged-brass);
-      letter-spacing: -0.12em;
-      min-width: 48px;
+      font-size: 3.05rem;
+      letter-spacing: -.16em;
+      line-height: .72;
+      color: var(--brass);
+      min-width: 58px;
     }
 
-    .brand-name {
+    .brand-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem;
-      letter-spacing: 0.06em;
+      font-size: 1.45rem;
+      letter-spacing: .11em;
       text-transform: uppercase;
       line-height: 1;
     }
 
-    .brand-sub {
-      font-size: 0.62rem;
-      letter-spacing: 0.13em;
+    .brand-subtitle {
+      margin-top: 7px;
+      font-size: .68rem;
+      letter-spacing: .17em;
       text-transform: uppercase;
-      margin-top: 5px;
-      color: var(--moss-green);
+      color: var(--green-600);
+      font-weight: 500;
     }
 
     .nav-links {
       display: flex;
+      gap: 30px;
       align-items: center;
-      gap: 34px;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
+      font-size: .76rem;
+      letter-spacing: .10em;
       text-transform: uppercase;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .nav-links a {
-      text-decoration: none;
-    }
-
+    .nav-links a { text-decoration: none; }
     .nav-cta {
-      background: var(--deep-green);
-      color: var(--cream);
-      padding: 14px 20px;
-      border-radius: 4px;
+      padding: 13px 18px;
+      background: var(--green-800);
+      color: var(--cream-100);
+      border-radius: 5px;
     }
 
     .hero {
-      min-height: 760px;
       position: relative;
       overflow: hidden;
       background:
-        radial-gradient(circle at 87% 26%, rgba(31,46,35,0.16), transparent 17%),
-        linear-gradient(90deg, rgba(250,247,243,0.98) 0%, rgba(250,247,243,0.94) 42%, rgba(233,227,214,0.56) 100%);
-      padding-top: 126px;
+        radial-gradient(circle at 86% 18%, rgba(183,154,107,.16), transparent 20%),
+        linear-gradient(110deg, #FAF7F3 0%, #FAF7F3 44%, #EDE4D7 100%);
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(250,247,243,0.78), rgba(250,247,243,0.18)),
-        url('emmanuel-lara-portrait.jpg') right bottom / auto 92% no-repeat;
-      z-index: 0;
+    .hero-grid {
+      min-height: 680px;
+      display: grid;
+      grid-template-columns: 1fr .92fr;
+      gap: 52px;
+      align-items: center;
     }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      right: -80px;
-      top: 190px;
-      width: 320px;
-      height: 520px;
-      background: radial-gradient(ellipse at center, rgba(71,89,64,0.22), transparent 68%);
-      filter: blur(12px);
-      opacity: 0.7;
-      z-index: 0;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 560px;
-      padding: 82px 0 72px;
-    }
+    .hero-copy { padding: 72px 0; }
 
     .kicker {
-      color: var(--aged-brass);
-      letter-spacing: 0.12em;
+      margin-bottom: 20px;
+      color: var(--brass);
+      font-size: .78rem;
+      letter-spacing: .16em;
       text-transform: uppercase;
-      font-size: 0.78rem;
-      font-weight: 700;
-      margin-bottom: 22px;
-    }
-
-    .line-mark {
-      width: 110px;
-      height: 2px;
-      background: var(--aged-brass);
-      margin-bottom: 28px;
+      font-weight: 800;
     }
 
     h1, h2, h3 {
       font-family: 'Cormorant Garamond', serif;
+      margin: 0;
       font-weight: 600;
-      margin: 0;
       line-height: 1.02;
+      letter-spacing: -.045em;
     }
 
-    h1 {
-      font-size: clamp(3.7rem, 6.2vw, 5.9rem);
-      letter-spacing: -0.055em;
-    }
+    h1 { font-size: clamp(4.2rem, 7vw, 6.3rem); max-width: 690px; }
+    h2 { font-size: clamp(2.7rem, 4.4vw, 4.25rem); }
+    h3 { font-size: 1.55rem; }
+    .gold { color: var(--brass); }
 
-    h1 span, .gold { color: var(--aged-brass); }
-
-    h2 {
-      font-size: clamp(2.4rem, 4vw, 4rem);
-      letter-spacing: -0.04em;
-    }
-
-    h3 {
-      font-size: 1.65rem;
-      letter-spacing: -0.025em;
-    }
-
-    p {
-      margin: 0;
-      color: var(--muted);
-    }
+    p { margin: 0; color: var(--muted); }
 
     .hero-sub {
-      font-size: 1.04rem;
-      max-width: 500px;
-      margin: 26px 0 24px;
+      margin: 28px 0 26px;
+      max-width: 560px;
+      font-size: 1.08rem;
     }
 
     .claim {
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 14px;
-      align-items: start;
-      margin: 24px 0 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 26px 0 30px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-size: 0.86rem;
-      font-weight: 700;
+      font-size: .86rem;
+      letter-spacing: .08em;
+      font-weight: 800;
     }
 
     .claim::before {
       content: "";
-      width: 26px;
+      width: 42px;
       height: 2px;
-      background: var(--aged-brass);
+      background: var(--brass);
       margin-top: 11px;
+      flex: 0 0 auto;
     }
 
-    .cta {
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      padding: 18px 26px;
-      background: var(--deep-green);
-      color: var(--cream);
+      justify-content: center;
+      gap: 13px;
+      padding: 18px 25px;
+      border-radius: 6px;
+      background: var(--green-800);
+      color: var(--cream-100);
       text-decoration: none;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.92rem;
-      letter-spacing: 0.04em;
+      box-shadow: 0 18px 40px rgba(20,32,25,.18);
+      font-size: .9rem;
+      font-weight: 800;
+      letter-spacing: .045em;
       text-transform: uppercase;
-      box-shadow: 0 16px 36px rgba(20,32,25,0.18);
-      transition: transform 0.2s ease, background 0.2s ease;
+      transition: transform .2s ease, background .2s ease;
     }
 
-    .cta small {
+    .btn small {
       display: block;
-      font-size: 0.72rem;
-      letter-spacing: 0;
+      margin-top: 3px;
+      font-size: .72rem;
       text-transform: none;
+      letter-spacing: 0;
       font-weight: 400;
-      opacity: 0.88;
-      margin-top: 2px;
+      opacity: .86;
     }
 
-    .cta:hover {
-      transform: translateY(-2px);
-      background: var(--moss-green);
+    .btn:hover { transform: translateY(-2px); background: var(--green-600); }
+
+    .hero-photo {
+      align-self: end;
+      position: relative;
+      min-height: 630px;
     }
 
-    .trust-bar {
-      background: linear-gradient(90deg, var(--deep-green-2), var(--deep-green));
-      color: var(--cream);
-      padding: 30px 0;
+    .hero-photo img {
+      position: absolute;
+      right: -10px;
+      bottom: 0;
+      width: min(520px, 100%);
+      height: 640px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 22px 22px 0 0;
+      box-shadow: var(--shadow);
+    }
+
+    .trust {
+      background: linear-gradient(90deg, var(--green-900), var(--green-800));
+      color: var(--cream-100);
+      padding: 26px 0;
     }
 
     .trust-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
+      gap: 18px;
     }
 
-    .trust-item {
-      display: grid;
-      grid-template-columns: 42px 1fr;
+    .trust-card {
+      display: flex;
       gap: 14px;
       align-items: center;
-      border-right: 1px solid rgba(183,154,107,0.34);
-      padding-right: 18px;
+      padding: 10px 14px;
+      border-right: 1px solid rgba(183,154,107,.28);
     }
 
-    .trust-item:last-child { border-right: 0; }
-
-    .icon {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--aged-brass);
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      color: var(--aged-brass);
-      font-size: 1.05rem;
+    .trust-card:last-child { border-right: 0; }
+    .svg-icon {
+      width: 38px;
+      height: 38px;
+      color: var(--brass);
+      flex: 0 0 auto;
     }
 
-    .trust-item strong {
+    .trust-card strong {
       display: block;
-      color: var(--aged-brass);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
+      color: var(--brass-soft);
+      font-size: .78rem;
+      letter-spacing: .1em;
       text-transform: uppercase;
       margin-bottom: 2px;
     }
 
-    .trust-item span {
-      display: block;
-      font-size: 0.86rem;
-      color: rgba(250,247,243,0.86);
-    }
+    .trust-card span { font-size: .86rem; color: rgba(250,247,243,.84); }
 
     section { padding: 82px 0; }
+    .section-head { text-align: center; max-width: 760px; margin: 0 auto 42px; }
+    .rule { width: 54px; height: 2px; background: var(--brass); margin: 18px auto 0; }
 
-    .center {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .center .line-small {
-      margin: 16px auto 0;
-    }
-
-    .line-small {
-      width: 42px;
-      height: 2px;
-      background: var(--aged-brass);
-    }
-
-    .identify-grid {
+    .problem-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      margin-top: 46px;
+      gap: 18px;
     }
 
-    .identify-item {
-      text-align: center;
-      padding: 10px 30px;
-      border-right: 1px solid var(--line);
+    .problem-card {
+      min-height: 190px;
+      padding: 26px 24px;
+      border: 1px solid rgba(183,154,107,.22);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,253,249,.78), rgba(250,247,243,.68));
+      box-shadow: 0 14px 40px rgba(31,46,35,.045);
+      transition: transform .2s ease, border-color .2s ease;
     }
 
-    .identify-item:last-child { border-right: 0; }
-
-    .identify-icon {
-      color: var(--aged-brass);
-      font-size: 2.2rem;
-      margin-bottom: 18px;
-      font-weight: 300;
+    .problem-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(183,154,107,.5);
     }
 
-    .identify-item p {
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-
-    .bio {
-      padding-top: 28px;
-    }
+    .problem-card .svg-icon { margin-bottom: 20px; }
+    .problem-card p { color: var(--ink); font-size: .96rem; }
 
     .bio-grid {
       display: grid;
-      grid-template-columns: 0.85fr 1fr;
-      gap: 70px;
+      grid-template-columns: .9fr 1fr;
+      gap: 68px;
       align-items: center;
     }
 
     .bio-photo {
-      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 18px 48px rgba(31,46,35,0.12);
-      background: var(--warm-ivory);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      background: var(--ivory);
     }
 
     .bio-photo img {
       width: 100%;
-      height: 440px;
+      height: 470px;
       object-fit: cover;
-      object-position: center 30%;
+      object-position: center 18%;
     }
 
-    .bio-copy .kicker { margin-bottom: 10px; }
-    .bio-copy h2 { margin-bottom: 6px; }
-    .role {
-      color: var(--aged-brass);
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
+    .role { color: var(--brass); font-weight: 700; margin: 8px 0 20px; }
+    .bio-copy > p { margin-top: 22px; max-width: 600px; font-size: 1.02rem; }
 
-    .bio-list {
+    .bio-points { display: grid; gap: 12px; margin-top: 26px; }
+    .bio-points div {
       display: grid;
+      grid-template-columns: 26px 1fr;
       gap: 13px;
-      margin-top: 24px;
-    }
-
-    .bio-list div {
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 12px;
-      align-items: start;
-      font-size: 0.94rem;
       color: var(--ink);
+      font-size: .95rem;
     }
-
-    .bio-list div::before {
+    .bio-points div::before {
       content: "✓";
-      width: 22px;
-      height: 22px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--aged-brass);
-      border-radius: 999px;
-      color: var(--aged-brass);
-      font-size: 0.75rem;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--brass);
+      color: var(--brass);
+      display: grid; place-items: center;
+      font-size: .75rem;
       margin-top: 1px;
     }
 
     .approach {
       display: grid;
-      grid-template-columns: 1fr 1.15fr;
-      background: var(--deep-green);
-      color: var(--cream);
+      grid-template-columns: 1fr 1fr;
       padding: 0;
+      background: var(--green-800);
+      color: var(--cream-100);
     }
 
     .approach-copy {
-      padding: 70px max(6vw, 48px);
-      background:
-        radial-gradient(circle at 0% 0%, rgba(183,154,107,0.16), transparent 32%),
-        var(--deep-green);
+      padding: 72px max(6vw, 44px);
+      background: radial-gradient(circle at 0 0, rgba(183,154,107,.16), transparent 34%), var(--green-800);
     }
-
-    .approach-copy p {
-      color: rgba(250,247,243,0.84);
-      margin-top: 22px;
-    }
-
+    .approach-copy p { color: rgba(250,247,243,.82); margin-top: 22px; font-size: 1.02rem; }
     .approach-copy .gold-note {
-      color: var(--soft-gold);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem;
-      line-height: 1.25;
       margin-top: 24px;
+      color: var(--brass-soft);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      line-height: 1.22;
     }
-
     .approach-visual {
-      min-height: 380px;
-      background:
-        linear-gradient(90deg, rgba(31,46,35,0.18), rgba(31,46,35,0.08)),
-        url('emmanuel-lara-desk.jpg') center / cover no-repeat;
+      min-height: 420px;
+      background: linear-gradient(90deg, rgba(31,46,35,.08), rgba(31,46,35,.20)), url('emmanuel-lara-desk.jpg') center / cover no-repeat;
     }
 
-    .process {
-      background: var(--cream);
-    }
-
-    .timeline {
+    .process { background: var(--cream-100); }
+    .steps {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      margin-top: 46px;
-      position: relative;
+      gap: 18px;
+      margin-top: 42px;
     }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
-      top: 24px;
-      left: 10%;
-      right: 10%;
-      height: 1px;
-      background: var(--aged-brass);
-      opacity: 0.8;
-    }
-
     .step {
       text-align: center;
-      position: relative;
-      padding: 0 24px;
+      padding: 24px 18px 12px;
+      border-top: 1px solid var(--line);
     }
-
-    .step-number {
-      width: 48px;
-      height: 48px;
-      border: 1px solid var(--aged-brass);
-      background: var(--cream);
-      color: var(--deep-green);
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 22px;
-      position: relative;
-      z-index: 2;
-      font-weight: 700;
+    .num {
+      width: 48px; height: 48px;
+      border: 1px solid var(--brass);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      margin: -48px auto 22px;
+      background: var(--cream-100);
+      font-weight: 800;
+      color: var(--green-800);
     }
-
     .step strong {
       display: block;
+      margin-bottom: 8px;
       text-transform: uppercase;
-      font-size: 0.82rem;
-      letter-spacing: 0.06em;
-      margin-bottom: 10px;
+      letter-spacing: .08em;
+      font-size: .80rem;
     }
-
-    .step p { font-size: 0.88rem; color: var(--muted); }
+    .step p { font-size: .9rem; }
 
     .final {
+      padding: 68px 0;
+      color: var(--cream-100);
       background:
-        linear-gradient(90deg, rgba(20,32,25,0.96), rgba(31,46,35,0.92)),
-        radial-gradient(circle at 0% 50%, rgba(183,154,107,0.18), transparent 28%);
-      color: var(--cream);
-      padding: 56px 0;
+        radial-gradient(circle at 10% 50%, rgba(183,154,107,.16), transparent 32%),
+        linear-gradient(90deg, var(--green-900), var(--green-800));
     }
-
     .final-grid {
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 42px;
       align-items: center;
     }
-
-    .final h2 {
-      font-size: clamp(2.2rem, 3.2vw, 3.4rem);
-    }
-
-    .final .gold { display: block; }
-
-    .final .cta {
-      background: var(--aged-brass);
-      color: var(--deep-green);
-      box-shadow: 0 16px 34px rgba(0,0,0,0.18);
-    }
-
-    .final .cta:hover { background: var(--warm-ivory); }
-
-    .fine-print {
-      border-top: 1px solid rgba(183,154,107,0.28);
-      margin-top: 36px;
-      padding-top: 18px;
-      display: flex;
-      gap: 28px;
-      flex-wrap: wrap;
-      font-size: 0.78rem;
-      color: rgba(250,247,243,0.74);
-    }
+    .final h2 { font-size: clamp(2.5rem, 4vw, 4rem); max-width: 720px; }
+    .final .btn { background: var(--brass); color: var(--green-900); }
+    .final .btn:hover { background: var(--ivory); }
 
     @media (max-width: 980px) {
-      .nav {
-        position: sticky;
-        top: 0;
-        background: rgba(250,247,243,0.96);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(183,154,107,0.15);
-        padding: 16px 0;
-      }
+      .header-inner { min-height: 82px; }
+      .nav-links { display: none; }
+      .mark { font-size: 2.75rem; min-width: 52px; }
+      .brand-title { font-size: 1.12rem; }
+      .brand-subtitle { font-size: .56rem; letter-spacing: .14em; }
 
-      .nav-links {
-        display: none;
-      }
-
-      .brand-name {
-        font-size: 1rem;
-      }
-
-      .brand-sub {
-        font-size: 0.52rem;
-      }
-
-      .hero {
+      .hero-grid {
         min-height: auto;
-        padding-top: 0;
-        background: linear-gradient(180deg, #FAF7F3 0%, #F1EADF 100%);
-      }
-
-      .hero::before,
-      .hero::after {
-        display: none;
-      }
-
-      .hero-content {
-        padding: 46px 0 52px;
-        max-width: 100%;
-      }
-
-      h1 {
-        font-size: clamp(3rem, 12vw, 4.5rem);
-      }
-
-      .hero-sub {
-        font-size: 1rem;
-        line-height: 1.5;
-      }
-
-      .trust-grid, .identify-grid, .bio-grid, .timeline, .final-grid, .approach {
-        grid-template-columns: 1fr;
-      }
-
-      .identify-grid {
-        margin-top: 22px;
-      }
-
-      .trust-item, .identify-item {
-        border-right: 0;
-        border-bottom: 1px solid rgba(183,154,107,0.2);
-        padding-bottom: 18px;
-      }
-
-      .identify-item {
-        padding: 20px 10px;
-      }
-
-      section {
-        padding: 58px 0;
-      }
-
-      .bio-photo img {
-        height: auto;
-      }
-
-      .timeline::before {
-        display: none;
-      }
-
-      .step {
-        margin-bottom: 18px;
-      }
-
-      .approach-visual {
-        min-height: 240px;
-      }
-
-      .final .cta {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 0;
         width: 100%;
-        justify-content: center;
       }
+      .hero-photo {
+        width: 100%;
+        min-height: auto;
+        align-self: stretch;
+      }
+      .hero-photo img {
+        position: static;
+        width: 100%;
+        height: 430px;
+        border-radius: 0;
+        object-position: center 18%;
+        box-shadow: none;
+      }
+      .hero-copy { padding: 44px 0 56px; }
+      h1 { font-size: clamp(3.05rem, 12.5vw, 4.7rem); }
+      h2 { font-size: clamp(2.45rem, 10vw, 3.65rem); }
+      .hero-sub { font-size: 1rem; margin: 24px 0 22px; }
+      .btn { width: 100%; padding: 18px 22px; }
+
+      .trust { padding: 22px 0; }
+      .trust-grid { grid-template-columns: 1fr 1fr; gap: 0; }
+      .trust-card { border-right: 0; border-bottom: 1px solid rgba(183,154,107,.2); padding: 18px 10px; align-items: flex-start; }
+      .trust-card:nth-child(odd) { padding-left: 0; }
+      .trust-card:nth-child(even) { padding-right: 0; }
+      .trust-card:nth-child(3), .trust-card:nth-child(4) { border-bottom: 0; }
+      .trust-card span { font-size: .82rem; }
+
+      section { padding: 62px 0; }
+      .section-head { margin-bottom: 26px; }
+      .problem-grid, .bio-grid, .approach, .steps, .final-grid { grid-template-columns: 1fr; }
+      .problem-grid { gap: 12px; }
+      .problem-card {
+        min-height: auto;
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 16px;
+        align-items: center;
+        padding: 18px;
+        border-radius: 14px;
+      }
+      .problem-card .svg-icon { margin-bottom: 0; }
+      .bio-grid { gap: 34px; }
+      .bio-photo img { height: 440px; }
+      .approach-copy { padding: 62px 9%; }
+      .approach-visual { min-height: 280px; }
+      .steps { gap: 24px; margin-top: 34px; }
+      .step { padding-top: 18px; }
+      .num { margin: 0 auto 18px; }
+      .final { padding: 62px 0; }
     }
   </style>
 </head>
 <body>
-
-  <header class="nav">
-    <div class="container nav-inner">
-      <a href="#" class="brand">
-        <div class="monogram">EL</div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">
+        <div class="mark">EL</div>
         <div>
-          <div class="brand-name">Emmanuel Lara</div>
-          <div class="brand-sub">Asesor Profesional Patrimonial</div>
+          <div class="brand-title">Emmanuel Lara</div>
+          <div class="brand-subtitle">Asesor Profesional Patrimonial</div>
         </div>
       </a>
       <nav class="nav-links">
         <a href="#enfoque">Enfoque</a>
         <a href="#servicios">Servicios</a>
-        <a href="#beneficios">Beneficios</a>
         <a href="#proceso">Proceso</a>
         <a href="#bio">Sobre mí</a>
-        <a href="#contacto" class="nav-cta">Agendar diagnóstico</a>
+        <a class="nav-cta" href="#contacto">Agendar diagnóstico</a>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="kicker">Estrategia · Protección · Legado</div>
-        <h1>Tu patrimonio no debería depender <span>solo de ti.</span></h1>
-        <p class="hero-sub">
-          Diseño estrategias patrimoniales para proteger lo que has construido y dar continuidad a tu familia y tu negocio.
-        </p>
-        <div class="claim">
-          <div>No te vendo un seguro.<br><span class="gold">Te construyo una estrategia.</span></div>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="kicker">Estrategia · Protección · Legado</div>
+          <h1>Tu patrimonio no debería depender <span class="gold">solo de ti.</span></h1>
+          <p class="hero-sub">Diseño estrategias patrimoniales para proteger lo que has construido y dar continuidad a tu familia y tu negocio.</p>
+          <div class="claim"><div>No te vendo un seguro.<br><span class="gold">Te construyo una estrategia.</span></div></div>
+          <a class="btn" href="#contacto"><span>▣</span><span>Quiero mi diagnóstico patrimonial<small>Sin costo. Personalizado. Confidencial.</small></span></a>
         </div>
-        <a href="#contacto" class="cta">
-          <span>▣</span>
-          <span>Quiero mi diagnóstico patrimonial<small>Sin costo. Personalizado. Confidencial.</small></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <div class="trust-bar">
-    <div class="container trust-grid">
-      <div class="trust-item">
-        <div class="icon">✓</div>
-        <div><strong>+14 años</strong><span>en liderazgo comercial y financiero</span></div>
-      </div>
-      <div class="trust-item">
-        <div class="icon">▥</div>
-        <div><strong>Respaldo</strong><span>institucional con GNP Seguros</span></div>
-      </div>
-      <div class="trust-item">
-        <div class="icon">◌</div>
-        <div><strong>Enfoque</strong><span>en estrategia patrimonial y continuidad</span></div>
-      </div>
-      <div class="trust-item">
-        <div class="icon">⌖</div>
-        <div><strong>Atención</strong><span>en Mérida y de forma remota</span></div>
-      </div>
-    </div>
-  </div>
-
-  <section id="servicios">
-    <div class="container center">
-      <h2>¿Te identificas?</h2>
-      <div class="line-small"></div>
-    </div>
-    <div class="container identify-grid">
-      <div class="identify-item">
-        <div class="identify-icon">▢</div>
-        <p>Tu negocio depende de ti y generas ingresos variables.</p>
-      </div>
-      <div class="identify-item">
-        <div class="identify-icon">◎</div>
-        <p>Nadie más está preparado para tomar decisiones por ti.</p>
-      </div>
-      <div class="identify-item">
-        <div class="identify-icon">⌂</div>
-        <p>Mezclas tus finanzas <strong>personales con las</strong> de tu empresa.</p>
-      </div>
-      <div class="identify-item">
-        <div class="identify-icon">$</div>
-        <p>Los impuestos te quitan liquidez y no tienes una estrategia clara.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="bio" id="bio">
-    <div class="container bio-grid">
-      <div class="bio-photo">
-        <img src="emmanuel-lara-portrait.jpg" alt="Emmanuel Lara, Asesor Profesional Patrimonial">
-      </div>
-      <div class="bio-copy">
-        <div class="kicker">¿Quién estará contigo?</div>
-        <h2>Emmanuel Lara</h2>
-        <p class="role">Asesor Profesional Patrimonial</p>
-        <div class="line-small"></div>
-        <p style="margin-top:22px;">
-          Acompaño a empresarios y profesionistas a proteger lo que han construido y tomar decisiones patrimoniales con claridad.
-        </p>
-        <div class="bio-list">
-          <div>+14 años de experiencia en liderazgo comercial y financiero.</div>
-          <div>Especialista en protección patrimonial, seguros de vida y SGMM.</div>
-          <div>Formación continua y enfoque en soluciones personalizadas.</div>
-          <div>Atención cercana, ética y 100% confidencial.</div>
+        <div class="hero-photo">
+          <img src="emmanuel-lara-portrait.jpg" alt="Emmanuel Lara, asesor patrimonial">
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="approach" id="enfoque">
-    <div class="approach-copy">
-      <div class="kicker">Mi enfoque</div>
-      <h2>Primero entiendo tu historia. Después construimos la estrategia.</h2>
-      <p>
-        Cada patrimonio tiene una historia detrás: años de trabajo, decisiones difíciles, familia, negocio, responsabilidades y planes que no deberían quedar vulnerables ante lo inesperado.
-      </p>
-      <p>
-        Mi trabajo es ayudarte a ordenar todo eso con claridad: qué proteger, qué fortalecer, qué ajustar y qué decisiones conviene tomar con calma.
-      </p>
-      <p class="gold-note">La estrategia correcta no empieza con un producto. Empieza con una conversación honesta.</p>
-    </div>
-    <div class="approach-visual" aria-label="Imagen editorial de escritorio patrimonial"></div>
-  </section>
+    <section class="trust" aria-label="Credenciales">
+      <div class="container trust-grid">
+        <div class="trust-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"/><path d="M8.5 12l2.2 2.2 4.8-5"/></svg><div><strong>+14 años</strong><span>liderazgo comercial y financiero</span></div></div>
+        <div class="trust-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h16M6 10v8M10 10v8M14 10v8M18 10v8M3 20h18M12 4l8 4H4l8-4z"/></svg><div><strong>Respaldo</strong><span>institucional con GNP Seguros</span></div></div>
+        <div class="trust-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg><div><strong>Enfoque</strong><span>estrategia patrimonial y continuidad</span></div></div>
+        <div class="trust-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s7-5.2 7-11a7 7 0 10-14 0c0 5.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg><div><strong>Atención</strong><span>Mérida y modalidad remota</span></div></div>
+      </div>
+    </section>
 
-  <section class="process" id="proceso">
-    <div class="container center">
-      <h2>Así trabajamos</h2>
-      <div class="line-small"></div>
-    </div>
-    <div class="container timeline">
-      <div class="step">
-        <div class="step-number">1</div>
-        <strong>Diagnóstico</strong>
-        <p>Entendemos tu situación, tus objetivos y los riesgos que enfrentas.</p>
+    <section id="servicios">
+      <div class="container section-head"><h2>¿Te identificas?</h2><div class="rule"></div></div>
+      <div class="container problem-grid">
+        <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-7h6v7"/></svg><p>Tu negocio depende de ti y tus ingresos varían mes a mes.</p></div>
+        <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a4 4 0 110 8 4 4 0 010-8z"/><path d="M4 21a8 8 0 0116 0"/></svg><p>Nadie más está preparado para tomar decisiones por ti.</p></div>
+        <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v12H4z"/><path d="M8 7V5h8v2M8 12h8M8 16h5"/></svg><p>Mezclas finanzas personales con compromisos de tu empresa.</p></div>
+        <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 6.5c-1-1-2.5-1.5-4.2-1.5-2.2 0-3.8 1.1-3.8 2.8 0 4.2 8 2 8 6.4 0 1.8-1.6 3-4.2 3-2 0-3.6-.6-4.8-1.8"/></svg><p>La carga fiscal reduce tu liquidez y no hay una estrategia clara.</p></div>
       </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <strong>Diseño estratégico</strong>
-        <p>Diseñamos una estrategia alineada a tu realidad y prioridades.</p>
-      </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <strong>Implementación</strong>
-        <p>Te acompaño en la ejecución y coordinación de cada componente.</p>
-      </div>
-      <div class="step">
-        <div class="step-number">4</div>
-        <strong>Revisión continua</strong>
-        <p>Ajustamos tu estrategia conforme evolucionan tu negocio, tu familia y tus objetivos.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="final" id="contacto">
-    <div class="container final-grid">
-      <div>
+    <section class="bio" id="bio">
+      <div class="container bio-grid">
+        <div class="bio-photo"><img src="emmanuel-lara-portrait.jpg" alt="Emmanuel Lara"></div>
+        <div class="bio-copy">
+          <div class="kicker">¿Quién estará contigo?</div>
+          <h2>Emmanuel Lara</h2>
+          <p class="role">Asesor Profesional Patrimonial</p>
+          <div class="rule" style="margin:0"></div>
+          <p>Acompaño a empresarios y profesionistas a proteger lo que han construido y tomar decisiones patrimoniales con claridad.</p>
+          <div class="bio-points">
+            <div>+14 años de experiencia en liderazgo comercial y financiero.</div>
+            <div>Especialista en protección patrimonial, seguros de vida y SGMM.</div>
+            <div>Formación continua y enfoque en soluciones personalizadas.</div>
+            <div>Atención cercana, ética y confidencial.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="approach" id="enfoque">
+      <div class="approach-copy">
+        <div class="kicker">Mi enfoque</div>
+        <h2>Primero entiendo tu historia. Después construimos la estrategia.</h2>
+        <p>Cada patrimonio tiene una historia detrás: años de trabajo, familia, negocio, responsabilidades y planes que no deberían quedar vulnerables ante lo inesperado.</p>
+        <p>Mi trabajo es ayudarte a ordenar qué proteger, qué fortalecer y qué decisiones conviene tomar con calma.</p>
+        <p class="gold-note">La estrategia correcta no empieza con un producto. Empieza con una conversación honesta.</p>
+      </div>
+      <div class="approach-visual" aria-label="Imagen editorial"></div>
+    </section>
+
+    <section class="process" id="proceso">
+      <div class="container section-head"><h2>Así trabajamos</h2><div class="rule"></div></div>
+      <div class="container steps">
+        <div class="step"><div class="num">1</div><strong>Diagnóstico</strong><p>Entendemos tu situación, objetivos y riesgos principales.</p></div>
+        <div class="step"><div class="num">2</div><strong>Diseño estratégico</strong><p>Diseñamos una estrategia alineada a tu realidad.</p></div>
+        <div class="step"><div class="num">3</div><strong>Implementación</strong><p>Te acompaño en cada componente de la solución.</p></div>
+        <div class="step"><div class="num">4</div><strong>Revisión continua</strong><p>Ajustamos conforme evolucionan tu familia y negocio.</p></div>
+      </div>
+    </section>
+
+    <section class="final" id="contacto">
+      <div class="container final-grid">
         <h2>Tu tranquilidad es tu mejor activo. <span class="gold">Hablemos de tu patrimonio.</span></h2>
+        <a class="btn" href="https://wa.me/5219990000000"><span>▣</span><span>Agendar diagnóstico patrimonial<small>Sin costo. Personalizado. Confidencial.</small></span></a>
       </div>
-      <a href="https://wa.me/5219990000000" class="cta">
-        <span>▣</span>
-        <span>Agendar diagnóstico patrimonial<small>Sin costo. Personalizado. Confidencial.</small></span>
-      </a>
-    </div>
-    <div class="container fine-print">
-      <span>Confidencialidad total</span>
-      <span>Estrategias personalizadas</span>
-      <span>Acompañamiento cercano</span>
-      <span>Decisiones con claridad</span>
-    </div>
-  </section>
-
+    </section>
+  </main>
 </body>
 </html>
-
