@@ -105,7 +105,7 @@
     .header-cta:hover { background: var(--green-600); }
     .header-mobile-icon { display: none; }
 
-    /* HERO REAL DE DOS COLUMNAS INDEPENDIENTES */
+    /* HERO */
     .hero {
       background:
         radial-gradient(circle at 86% 18%, rgba(183,154,107,.16), transparent 20%),
@@ -315,7 +315,7 @@
 
 
     /* =========================================================
-       V4: CONTENCIÓN REAL DESKTOP + SIN HUECO EN MÓVIL
+       ESCRITORIO
        ========================================================= */
     .hero { padding: 0; }
 
@@ -350,20 +350,20 @@
         padding: 72px 0;
       }
 
+      /* CORRECCIÓN HERO PC */
       .hero-photo {
-        flex: 0 0 min(42%, 470px);
-        align-self: stretch;
-        display: flex;
-        align-items: flex-end;
+        flex: 0 0 min(45%, 480px);
+        align-self: flex-end;
+        display: block; 
         overflow: hidden;
       }
 
       .hero-photo img {
         width: 100%;
-        height: 100% !important;
-        max-height: none !important;
+        height: auto !important; 
+        max-height: 650px !important; 
         object-fit: cover !important;
-        object-position: center top !important;
+        object-position: top center !important; 
         border-radius: 16px 16px 0 0;
       }
 
@@ -378,10 +378,11 @@
         grid-template-columns: 1fr 1fr;
       }
 
+      /* CORRECCIÓN ENFOQUE PC */
       .approach-visual {
         min-height: 460px;
         background-size: cover !important;
-        background-position: center 38% !important;
+        background-position: top center !important; 
       }
     }
 
@@ -401,7 +402,9 @@
       }
     }
 
-    /* RESPONSIVO MÓVIL ESTRICTO */
+    /* =========================================================
+       MÓVIL
+       ========================================================= */
     @media (max-width: 980px) {
       .container { width: 88%; margin: 0 auto; }
       .header-inner { min-height: 82px; }
@@ -423,7 +426,6 @@
       .brand-title { font-size: 1.15rem; }
       .brand-subtitle { font-size: .58rem; letter-spacing: .12em; margin-top: 4px; }
 
-      /* Inversión nativa: Foto arriba completa, textos abajo */
       .hero-flex {
         flex-direction: column-reverse;
         gap: 0;
@@ -437,9 +439,13 @@
         flex: none;
       }
 
+      /* CORRECCIÓN HERO MÓVIL */
       .hero-photo img {
         width: 100vw;
-        height: 360px;
+        height: auto; 
+        aspect-ratio: 4 / 3; 
+        object-fit: cover;
+        object-position: top center;
         border-radius: 0;
         box-shadow: none;
       }
@@ -479,7 +485,12 @@
       .bio-photo img { aspect-ratio: 1 / 1; }
       
       .approach-copy { padding: 54px 6%; }
-      .approach-visual { min-height: 260px; }
+      
+      /* CORRECCIÓN ENFOQUE MÓVIL */
+      .approach-visual { 
+        min-height: 380px; 
+        background-position: top center; 
+      }
       
       .step { width: 100%; padding-top: 16px; }
       .num { margin: 0 auto 14px; }
