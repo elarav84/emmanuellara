@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emmanuel Lara | Arquitectura Patrimonial</title>
+  <style>
+    :root{
+      --deep-green:#1F2E23;
+      --moss:#475940;
+      --ivory:#E9E3D6;
+      --cream:#FAF7F3;
+      --brass:#B79A6B;
+      --white:#FFFFFF;
+      --text:#1F2E23;
+      --muted:#657066;
+      --line:rgba(31,46,35,.12);
+      --shadow:0 24px 70px rgba(31,46,35,.12);
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, Arial, Helvetica, sans-serif;
+      background:var(--cream);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .page-shell{
+      width:min(1180px, calc(100% - 36px));
+      margin:0 auto;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(18px);
+      background:rgba(250,247,243,.88);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+      letter-spacing:.04em;
+    }
+
+    .brand strong{
+      font-size:18px;
+      font-weight:700;
+    }
+
+    .brand span{
+      margin-top:4px;
+      font-size:11px;
+      text-transform:uppercase;
+      color:var(--moss);
+      letter-spacing:.18em;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:26px;
+      font-size:14px;
+      color:var(--moss);
+    }
+
+    .nav-cta{
+      padding:11px 18px;
+      border-radius:999px;
+      background:var(--deep-green);
+      color:var(--white);
+      font-weight:700;
+    }
+
+    .hero{
+      padding:54px 0 34px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.02fr .98fr;
+      gap:38px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      color:var(--brass);
+      text-transform:uppercase;
+      letter-spacing:.22em;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:16px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(42px, 5vw, 68px);
+      line-height:.98;
+      letter-spacing:-.055em;
+      color:var(--deep-green);
+    }
+
+    .hero-copy{
+      margin:24px 0 0;
+      max-width:620px;
+      color:var(--moss);
+      font-size:19px;
+      line-height:1.65;
+    }
+
+    .hero-actions{
+      margin-top:32px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      align-items:center;
+    }
+
+    .btn-primary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:54px;
+      padding:0 26px;
+      border-radius:999px;
+      background:var(--deep-green);
+      color:var(--white);
+      font-weight:800;
+      letter-spacing:.02em;
+      box-shadow:0 18px 40px rgba(31,46,35,.18);
+    }
+
+    .btn-secondary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:54px;
+      padding:0 24px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--deep-green);
+      font-weight:700;
+      background:rgba(255,255,255,.55);
+    }
+
+    .microcopy{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .hero-card{
+      background:var(--white);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(31,46,35,.08);
+    }
+
+    .hero-photo{
+      min-height:520px;
+      background:linear-gradient(135deg, rgba(31,46,35,.12), rgba(183,154,107,.14)), var(--ivory);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--moss);
+      text-align:center;
+      padding:32px;
+    }
+
+    .hero-photo span{
+      max-width:320px;
+      font-size:15px;
+      color:rgba(31,46,35,.62);
+    }
+
+    .trust-bar{
+      margin:38px 0 0;
+      background:linear-gradient(135deg, #17251b, #253a2b);
+      color:var(--white);
+      border-radius:var(--radius);
+      padding:30px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:22px;
+      box-shadow:0 20px 55px rgba(31,46,35,.16);
+    }
+
+    .trust-item{
+      padding:2px 12px;
+      border-left:1px solid rgba(233,227,214,.18);
+    }
+
+    .trust-item:first-child{border-left:0}
+
+    .trust-item strong{
+      display:block;
+      color:var(--brass);
+      font-size:13px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .trust-item span{
+      display:block;
+      font-size:15px;
+      color:rgba(255,255,255,.88);
+      line-height:1.45;
+    }
+
+    section{
+      padding:76px 0;
+    }
+
+    .section-head{
+      max-width:760px;
+      margin-bottom:34px;
+    }
+
+    .section-kicker{
+      color:var(--brass);
+      text-transform:uppercase;
+      letter-spacing:.22em;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:12px;
+    }
+
+    h2{
+      margin:0;
+      color:var(--deep-green);
+      font-size:clamp(34px, 4vw, 52px);
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+
+    .lead{
+      margin:18px 0 0;
+      color:var(--moss);
+      font-size:19px;
+      line-height:1.72;
+    }
+
+    .approach-card{
+      background:var(--white);
+      border:1px solid rgba(31,46,35,.08);
+      border-radius:var(--radius);
+      padding:42px;
+      box-shadow:0 18px 50px rgba(31,46,35,.08);
+    }
+
+    .approach-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:18px;
+      margin-top:30px;
+    }
+
+    .mini-card{
+      background:var(--cream);
+      border-radius:22px;
+      padding:24px;
+      border:1px solid rgba(31,46,35,.08);
+    }
+
+    .mini-card strong{
+      display:block;
+      color:var(--deep-green);
+      font-size:18px;
+      margin-bottom:8px;
+    }
+
+    .mini-card p{
+      margin:0;
+      color:var(--moss);
+      font-size:15px;
+    }
+
+    .audience{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:46px;
+      align-items:start;
+    }
+
+    .audience-panel{
+      background:var(--deep-green);
+      color:var(--white);
+      border-radius:var(--radius);
+      padding:42px;
+      box-shadow:0 20px 60px rgba(31,46,35,.18);
+    }
+
+    .audience-panel h2{color:var(--white)}
+    .audience-panel .lead{color:rgba(255,255,255,.82)}
+
+    .audience-list{
+      background:var(--white);
+      border-radius:var(--radius);
+      padding:28px;
+      border:1px solid rgba(31,46,35,.08);
+      box-shadow:0 18px 50px rgba(31,46,35,.08);
+    }
+
+    .audience-list ul{
+      padding:0;
+      margin:0;
+      list-style:none;
+    }
+
+    .audience-list li{
+      padding:20px 0;
+      border-bottom:1px solid rgba(31,46,35,.09);
+      color:var(--moss);
+      font-size:17px;
+    }
+
+    .audience-list li:last-child{border-bottom:0}
+    .check{color:var(--brass);font-weight:900;margin-right:10px}
+
+    .cta-section{
+      padding:74px 0 88px;
+    }
+
+    .cta-box{
+      background:linear-gradient(135deg, var(--deep-green), #2c4633);
+      border-radius:34px;
+      padding:54px;
+      color:var(--white);
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:34px;
+      align-items:center;
+      box-shadow:0 28px 80px rgba(31,46,35,.22);
+    }
+
+    .cta-box h2{color:var(--white)}
+    .cta-box p{color:rgba(255,255,255,.82);font-size:18px;margin:18px 0 0}
+
+    .cta-box .btn-primary{
+      background:var(--brass);
+      color:var(--deep-green);
+      box-shadow:none;
+      width:100%;
+      text-align:center;
+    }
+
+    .cta-note{
+      margin-top:14px;
+      text-align:center;
+      color:rgba(255,255,255,.72);
+      font-size:14px;
+    }
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:32px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    @media(max-width:920px){
+      .nav-links{display:none}
+      .hero-grid,.audience,.cta-box{grid-template-columns:1fr}
+      .hero{padding-top:34px}
+      .hero-photo{min-height:360px}
+      .trust-bar{grid-template-columns:1fr 1fr;padding:24px}
+      .trust-item{border-left:0;border-top:1px solid rgba(233,227,214,.16);padding-top:16px}
+      .trust-item:nth-child(-n+2){border-top:0}
+      .approach-grid{grid-template-columns:1fr}
+      .cta-box{padding:34px}
+    }
+
+    @media(max-width:560px){
+      .page-shell{width:min(100% - 24px, 1180px)}
+      .nav{height:68px}
+      .brand strong{font-size:16px}
+      .brand span{font-size:10px}
+      .hero-card{border-radius:22px}
+      .hero-photo{min-height:320px}
+      .hero-actions{display:block}
+      .btn-primary,.btn-secondary{width:100%;margin-bottom:12px}
+      .trust-bar{grid-template-columns:1fr}
+      .trust-item:nth-child(-n+2){border-top:1px solid rgba(233,227,214,.16)}
+      .trust-item:first-child{border-top:0}
+      section{padding:54px 0}
+      .approach-card,.audience-panel,.audience-list{padding:28px}
+      .cta-box{border-radius:26px;padding:30px 24px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="page-shell nav">
+      <a class="brand" href="#top" aria-label="Emmanuel Lara">
+        <strong>Emmanuel Lara</strong>
+        <span>Arquitectura Patrimonial</span>
+      </a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#enfoque">Mi enfoque</a>
+        <a href="#clientes">¿Con quién trabajo?</a>
+        <a href="#contacto" class="nav-cta">Agendar diagnóstico</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="page-shell">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Consultoría patrimonial</div>
+            <h1>Protege lo que estás construyendo con estrategia y claridad.</h1>
+            <p class="hero-copy">Acompañamiento consultivo para ordenar, proteger y dar continuidad a tu patrimonio con una visión humana, estructurada y de largo plazo.</p>
+            <div class="hero-actions">
+              <a class="btn-primary" href="https://wa.me/529999999999?text=Hola%20Emmanuel%2C%20me%20interesa%20agendar%20un%20diagn%C3%B3stico%20patrimonial%20desde%20la%20secci%C3%B3n%20principal%20de%20tu%20p%C3%A1gina." target="_blank" rel="noopener">Agendar diagnóstico patrimonial</a>
+              <a class="btn-secondary" href="#enfoque">Conocer el enfoque</a>
+            </div>
+            <p class="microcopy">Conversación consultiva inicial · Confidencial · Sin presión comercial</p>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-photo">
+              <span>Espacio reservado para conservar tu fotografía hero actual sin modificar composición, recorte ni comportamiento responsive.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="trust-bar" aria-label="Indicadores de confianza">
+          <div class="trust-item"><strong>14+ años</strong><span>Experiencia en estrategia financiera</span></div>
+          <div class="trust-item"><strong>Respaldo</strong><span>Soluciones institucionales con GNP</span></div>
+          <div class="trust-item"><strong>Enfoque</strong><span>Protección y continuidad patrimonial</span></div>
+          <div class="trust-item"><strong>Atención</strong><span>Presencial en Mérida · alcance nacional</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="enfoque">
+      <div class="page-shell">
+        <div class="approach-card">
+          <div class="section-head">
+            <div class="section-kicker">Mi enfoque</div>
+            <h2>Primero entiendo tu historia. Después construimos estrategia.</h2>
+            <p class="lead">La asesoría patrimonial efectiva comienza con claridad, no con productos. Antes de hablar de una solución, revisamos tu contexto, prioridades, preocupaciones y objetivos.</p>
+          </div>
+          <div class="approach-grid">
+            <div class="mini-card">
+              <strong>Diagnóstico</strong>
+              <p>Ordenamos tu situación actual para identificar riesgos, prioridades y oportunidades.</p>
+            </div>
+            <div class="mini-card">
+              <strong>Estrategia</strong>
+              <p>Diseñamos una ruta patrimonial alineada a tu etapa de vida, familia y objetivos.</p>
+            </div>
+            <div class="mini-card">
+              <strong>Acompañamiento</strong>
+              <p>No se trata de vender una póliza y desaparecer, sino de construir continuidad.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="clientes">
+      <div class="page-shell audience">
+        <div class="audience-panel">
+          <div class="section-kicker">¿Con quién trabajo?</div>
+          <h2>Para quienes entienden que construir patrimonio también implica protegerlo.</h2>
+          <p class="lead">Acompaño a profesionistas, empresarios y familias que buscan tomar decisiones patrimoniales con claridad, estrategia y acompañamiento serio.</p>
+        </div>
+        <div class="audience-list">
+          <ul>
+            <li><span class="check">✓</span>Profesionistas con ingresos consolidados</li>
+            <li><span class="check">✓</span>Familias que desean blindaje financiero</li>
+            <li><span class="check">✓</span>Empresarios que buscan continuidad patrimonial</li>
+            <li><span class="check">✓</span>Personas que valoran acompañamiento serio y estratégico</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="cta-section">
+      <div class="page-shell">
+        <div class="cta-box">
+          <div>
+            <div class="section-kicker">Siguiente paso</div>
+            <h2>Agenda una conversación inicial.</h2>
+            <p>Revisemos tu contexto patrimonial y definamos si tiene sentido construir una estrategia juntos.</p>
+          </div>
+          <div>
+            <a class="btn-primary" href="https://wa.me/529999999999?text=Hola%20Emmanuel%2C%20me%20interesa%20agendar%20un%20diagn%C3%B3stico%20patrimonial%20desde%20el%20CTA%20final%20de%20tu%20p%C3%A1gina." target="_blank" rel="noopener">Agendar por WhatsApp</a>
+            <div class="cta-note">Conversación consultiva inicial · Confidencial · Sin presión comercial</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell">© Emmanuel Lara · Arquitectura patrimonial</div>
+  </footer>
+</body>
+</html>
