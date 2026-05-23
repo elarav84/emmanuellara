@@ -136,7 +136,7 @@
       width: 100%;
       height: 530px;
       object-fit: cover;
-      object-position: center 10%; /* Ajustado para dar más aire a la cabeza */
+      object-position: center 10%;
       border-radius: 16px 16px 0 0;
       box-shadow: var(--shadow);
     }
@@ -282,7 +282,7 @@
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
-      object-position: center 10%; /* Ajustado */
+      object-position: center 10%;
     }
 
     .role { color: var(--brass); font-weight: 700; margin: 8px 0 24px; font-size: 1.05rem; }
@@ -292,7 +292,7 @@
     .bio-points div strong { color: var(--ink); }
     .bio-points div::before { content: "✓"; width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--brass); color: var(--brass); display: grid; place-items: center; font-size: .75rem; margin-top: 1px; }
 
-    /* ENFOQUE (Ajustado para cuadrícula como las otras) */
+    /* ENFOQUE */
     .approach { background: var(--green-800); color: var(--cream-100); }
     
     .approach-grid {
@@ -314,9 +314,9 @@
 
     .approach-photo img {
       width: 100%;
-      aspect-ratio: 4 / 5; /* Formato vertical como las otras */
+      aspect-ratio: 4 / 5; 
       object-fit: cover;
-      object-position: center center; /* Centrado para el escritorio */
+      object-position: center center;
     }
 
     /* PROCESO */
@@ -331,8 +331,6 @@
     .final { padding: 92px 0; color: var(--cream-100); background: radial-gradient(circle at 10% 50%, rgba(183,154,107,.16), transparent 32%), linear-gradient(90deg, var(--green-900), var(--green-800)); }
     .final-grid { display: flex; align-items: center; justify-content: space-between; gap: 42px; }
     .final h2 { max-width: 680px; font-size: clamp(2.3rem, 3.5vw, 3.5rem); }
-
-
 
     /* =========================================================
        ESCRITORIO
@@ -370,30 +368,27 @@
         padding: 72px 0;
       }
 
-            .hero-flex {
-        flex-direction: column; /* Quitamos el 'column-reverse' para que el texto salga primero */
-        gap: 0;
-        width: 100vw;
-        margin-left: calc(-50vw + 50%);
-      }
-
       .hero-photo {
-        width: 100vw;
-        max-width: 100vw;
-        flex: none;
-        margin-top: 32px; /* Le damos un poco de respiro entre el botón y tu foto */
+        flex: 0 0 min(45%, 480px);
+        align-self: flex-end;
+        display: block; 
       }
 
       .hero-photo img {
-        width: 100vw;
-        height: auto; 
-        aspect-ratio: 4 / 5; /* Mantenemos este formato que salva tus brazos */
-        object-fit: cover;
-        object-position: center 10%;
-        border-radius: 0;
-        box-shadow: none;
+        width: 100%;
+        height: auto !important; 
+        max-height: 650px !important; 
+        object-fit: cover !important;
+        object-position: center 10% !important; 
+        border-radius: 16px 16px 0 0;
       }
 
+      .bio-photo img {
+        width: 100%;
+        height: 520px !important;
+        object-fit: cover !important;
+        object-position: center 10% !important; 
+      }
       
       .approach-photo img {
         width: 100%;
@@ -442,35 +437,37 @@
       .brand-title { font-size: 1.15rem; }
       .brand-subtitle { font-size: .58rem; letter-spacing: .12em; margin-top: 4px; }
 
+      /* Ajuste Hero Móvil: Texto arriba, foto abajo */
       .hero-flex {
-        flex-direction: column-reverse;
+        flex-direction: column; 
         gap: 0;
         width: 100vw;
         margin-left: calc(-50vw + 50%);
+      }
+
+      .hero-copy {
+        width: 88%;
+        margin: 0 auto;
+        padding: 42px 0 10px;
+        max-width: 100%;
+        flex: none;
       }
 
       .hero-photo {
         width: 100vw;
         max-width: 100vw;
         flex: none;
+        margin-top: 32px; 
       }
 
       .hero-photo img {
         width: 100vw;
         height: auto; 
-        aspect-ratio: 4 / 5; /* Formato retrato para mostrar brazos */
+        aspect-ratio: 4 / 5; 
         object-fit: cover;
-        object-position: center 10%; /* Ajuste fino cabeza */
+        object-position: center 10%; 
         border-radius: 0;
         box-shadow: none;
-      }
-
-      .hero-copy {
-        width: 88%;
-        margin: 0 auto;
-        padding: 42px 0 52px;
-        max-width: 100%;
-        flex: none;
       }
 
       h1 { font-size: 2.35rem; line-height: 1.1; }
@@ -497,7 +494,7 @@
       
       .bio-grid, .approach-grid { gap: 32px; }
       .bio-photo, .approach-photo { width: 100%; }
-      .bio-photo img, .approach-photo img { aspect-ratio: 4 / 5; object-position: center 10%; } /* Aire en la cabeza en bio, centrado en oficina */
+      .bio-photo img, .approach-photo img { aspect-ratio: 4 / 5; object-position: center 10%; } 
       
       .final { padding: 62px 0; }
     }
