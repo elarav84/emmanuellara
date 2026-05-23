@@ -445,7 +445,7 @@
     .final .btn { background: var(--brass); color: var(--green-900); }
     .final .btn:hover { background: var(--ivory); }
 
-    /* CORRECCIÓN FINAL EN MEDIA QUERIES PARA MÓVIL */
+    /* MEDIA QUERIES CORREGIDAS AL 100% PARA MÓVIL (SISTEMA NATIVO DE BLOQUES) */
     @media (max-width: 980px) {
       .container { width: min(90%, 390px); margin: 0 auto; }
       .header-inner { min-height: 82px; gap: 12px; }
@@ -470,38 +470,40 @@
       .brand-title { font-size: 1.15rem; }
       .brand-subtitle { font-size: .58rem; letter-spacing: .12em; margin-top: 4px; }
 
+      /* Cambiamos a bloque simple en móvil para evitar desfases */
       .hero-grid {
-        display: flex;
-        flex-direction: column-reverse;
-        gap: 0;
-        width: 100vw;
-        max-width: 100vw;
-        margin-left: calc(-50vw + 50%); /* Forzar que cubra de lado a lado */
+        display: block; 
+        width: 100%;
+        max-width: 100%;
       }
 
+      /* La foto va estrictamente al inicio del bloque, pegada al header */
       .hero-photo {
+        display: block;
         width: 100vw;
-        max-width: 100vw;
-        min-height: auto;
-        margin-top: 0; /* Quitamos cualquier holgura superior */
+        margin-left: calc(-50vw + 50%); /* Fuerza romper el contenedor e ir de borde a borde */
+        margin-top: 0;
         padding-top: 0;
+        min-height: auto;
       }
 
       .hero-photo img {
-        position: static;
+        position: static; /* Quita el posicionamiento absoluto que la desaparecía */
         width: 100%;
         height: 380px;
-        border-radius: 0;
+        object-fit: cover;
         object-position: center 20%;
+        border-radius: 0;
         box-shadow: none;
-        margin-top: 0; /* Eliminado el hueco entre header y foto */
+        margin: 0;
       }
 
+      /* Los textos se acomodan perfectamente abajo de la foto con sus respectivos aires */
       .hero-copy {
         width: min(90%, 390px);
         max-width: 390px;
         margin: 0 auto;
-        padding: 38px 0 52px;
+        padding: 42px 0 52px;
       }
 
       h1 {
