@@ -370,27 +370,30 @@
         padding: 72px 0;
       }
 
+            .hero-flex {
+        flex-direction: column; /* Quitamos el 'column-reverse' para que el texto salga primero */
+        gap: 0;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+      }
+
       .hero-photo {
-        flex: 0 0 min(45%, 480px);
-        align-self: flex-end;
-        display: block; 
+        width: 100vw;
+        max-width: 100vw;
+        flex: none;
+        margin-top: 32px; /* Le damos un poco de respiro entre el botón y tu foto */
       }
 
       .hero-photo img {
-        width: 100%;
-        height: auto !important; 
-        max-height: 650px !important; 
-        object-fit: cover !important;
-        object-position: center 10% !important; /* Aire en la cabeza */
-        border-radius: 16px 16px 0 0;
+        width: 100vw;
+        height: auto; 
+        aspect-ratio: 4 / 5; /* Mantenemos este formato que salva tus brazos */
+        object-fit: cover;
+        object-position: center 10%;
+        border-radius: 0;
+        box-shadow: none;
       }
 
-      .bio-photo img {
-        width: 100%;
-        height: 520px !important;
-        object-fit: cover !important;
-        object-position: center 10% !important; /* Aire en la cabeza */
-      }
       
       .approach-photo img {
         width: 100%;
