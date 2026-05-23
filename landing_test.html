@@ -540,36 +540,94 @@
     }
 
     @media (max-width: 980px) {
-      .nav { position: relative; background: var(--cream); }
-      .nav-inner, .nav-links { flex-direction: column; align-items: flex-start; }
-      .nav-links { gap: 14px; width: 100%; }
-      .nav-cta { display: inline-block; }
+      .nav {
+        position: sticky;
+        top: 0;
+        background: rgba(250,247,243,0.96);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(183,154,107,0.15);
+        padding: 16px 0;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .brand-name {
+        font-size: 1rem;
+      }
+
+      .brand-sub {
+        font-size: 0.52rem;
+      }
 
       .hero {
         min-height: auto;
         padding-top: 0;
+        background: linear-gradient(180deg, #FAF7F3 0%, #F1EADF 100%);
       }
 
-      .hero::before {
-        position: relative;
-        display: block;
-        height: 520px;
-        background:
-          linear-gradient(180deg, rgba(250,247,243,0.02), rgba(250,247,243,0.92)),
-          url('emmanuel-lara-portrait.jpg') center bottom / auto 100% no-repeat;
+      .hero::before,
+      .hero::after {
+        display: none;
       }
 
-      .hero-content { padding: 56px 0 62px; }
+      .hero-content {
+        padding: 46px 0 52px;
+        max-width: 100%;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 12vw, 4.5rem);
+      }
+
+      .hero-sub {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
       .trust-grid, .identify-grid, .bio-grid, .timeline, .final-grid, .approach {
         grid-template-columns: 1fr;
       }
 
-      .trust-item, .identify-item { border-right: 0; border-bottom: 1px solid rgba(183,154,107,0.26); padding-bottom: 20px; }
-      .trust-item:last-child, .identify-item:last-child { border-bottom: 0; }
-      .bio-photo img { height: auto; }
-      .timeline::before { display: none; }
-      .step { margin-bottom: 30px; }
-      .approach-visual { min-height: 300px; }
+      .identify-grid {
+        margin-top: 22px;
+      }
+
+      .trust-item, .identify-item {
+        border-right: 0;
+        border-bottom: 1px solid rgba(183,154,107,0.2);
+        padding-bottom: 18px;
+      }
+
+      .identify-item {
+        padding: 20px 10px;
+      }
+
+      section {
+        padding: 58px 0;
+      }
+
+      .bio-photo img {
+        height: auto;
+      }
+
+      .timeline::before {
+        display: none;
+      }
+
+      .step {
+        margin-bottom: 18px;
+      }
+
+      .approach-visual {
+        min-height: 240px;
+      }
+
+      .final .cta {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -601,7 +659,7 @@
         <div class="kicker">Estrategia · Protección · Legado</div>
         <h1>Tu patrimonio no debería depender <span>solo de ti.</span></h1>
         <p class="hero-sub">
-          Diseño estrategias patrimoniales para proteger lo que has construido, gestionar riesgos con inteligencia y asegurar la continuidad de tu negocio y tu familia.
+          Diseño estrategias patrimoniales para proteger lo que has construido y dar continuidad a tu familia y tu negocio.
         </p>
         <div class="claim">
           <div>No te vendo un seguro.<br><span class="gold">Te construyo una estrategia.</span></div>
@@ -671,11 +729,11 @@
         <p class="role">Asesor Profesional Patrimonial</p>
         <div class="line-small"></div>
         <p style="margin-top:22px;">
-          Acompaño a empresarios y profesionistas independientes a construir estrategias patrimoniales sólidas, que protejan su esfuerzo, optimicen su carga fiscal y aseguren la continuidad de lo que han construido.
+          Acompaño a empresarios y profesionistas a proteger lo que han construido y tomar decisiones patrimoniales con claridad.
         </p>
         <div class="bio-list">
           <div>+14 años de experiencia en liderazgo comercial y financiero.</div>
-          <div>Especialista en protección patrimonial, seguros de vida, SGMM y estrategias fiscales.</div>
+          <div>Especialista en protección patrimonial, seguros de vida y SGMM.</div>
           <div>Formación continua y enfoque en soluciones personalizadas.</div>
           <div>Atención cercana, ética y 100% confidencial.</div>
         </div>
@@ -712,7 +770,7 @@
       <div class="step">
         <div class="step-number">2</div>
         <strong>Diseño estratégico</strong>
-        <p>Creamos una estrategia patrimonial y fiscal a la medida de tu realidad.</p>
+        <p>Diseñamos una estrategia alineada a tu realidad y prioridades.</p>
       </div>
       <div class="step">
         <div class="step-number">3</div>
@@ -747,3 +805,4 @@
 
 </body>
 </html>
+
