@@ -112,23 +112,49 @@
       display: none;
     }
 
+    /* ESTRUCTURA HERO BLINDADA */
     .hero {
       position: relative;
       overflow: hidden;
       background:
         radial-gradient(circle at 86% 18%, rgba(183,154,107,.16), transparent 20%),
         linear-gradient(110deg, #FAF7F3 0%, #FAF7F3 44%, #EDE4D7 100%);
+      margin-top: 0;
+      padding-top: 0;
     }
 
     .hero-grid {
       min-height: 680px;
       display: grid;
       grid-template-columns: 1fr .92fr;
+      grid-template-areas: "copy photo";
       gap: 52px;
       align-items: center;
     }
 
-    .hero-copy { padding: 72px 0; }
+    .hero-copy { 
+      grid-area: copy;
+      padding: 72px 0; 
+    }
+
+    .hero-photo {
+      grid-area: photo;
+      align-self: end;
+      position: relative;
+      min-height: 630px;
+    }
+
+    .hero-photo img {
+      position: absolute;
+      right: -10px;
+      bottom: 0;
+      width: min(520px, 100%);
+      height: 640px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 22px 22px 0 0;
+      box-shadow: var(--shadow);
+    }
 
     .kicker {
       margin-bottom: 20px;
@@ -210,24 +236,6 @@
     }
 
     .btn:hover { transform: translateY(-2px); background: var(--green-600); }
-
-    .hero-photo {
-      align-self: end;
-      position: relative;
-      min-height: 630px;
-    }
-
-    .hero-photo img {
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      width: min(520px, 100%);
-      height: 640px;
-      object-fit: cover;
-      object-position: center top;
-      border-radius: 22px 22px 0 0;
-      box-shadow: var(--shadow);
-    }
 
     .trust {
       background: linear-gradient(90deg, var(--green-900), var(--green-800));
@@ -445,7 +453,7 @@
     .final .btn { background: var(--brass); color: var(--green-900); }
     .final .btn:hover { background: var(--ivory); }
 
-    /* MEDIA QUERIES PERFECTAMENTE SINCRONIZADAS PARA MÓVIL Y ESCRITORIO */
+    /* CORECCIÓN RESPONSIVA EXCLUSIVA MEDIANTE GRID AREAS */
     @media (max-width: 980px) {
       .container { width: min(90%, 390px); margin: 0 auto; }
       .header-inner { min-height: 82px; gap: 12px; }
@@ -470,10 +478,13 @@
       .brand-title { font-size: 1.15rem; }
       .brand-subtitle { font-size: .58rem; letter-spacing: .12em; margin-top: 4px; }
 
-      /* Inversión limpia mediante Flexbox en móvil sin romper rejillas de PC */
+      /* El Grid fuerza el acomodo visual exacto en móvil */
       .hero-grid {
-        display: flex;
-        flex-direction: column-reverse;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+          "photo"
+          "copy";
         gap: 0;
         width: 100vw;
         max-width: 100vw;
@@ -481,11 +492,13 @@
         min-height: auto;
       }
 
+      /* La foto se ancla arriba del todo sin espacio residual */
       .hero-photo {
+        grid-area: photo;
         display: block;
         width: 100vw;
         max-width: 100vw;
-        min-height: auto;
+        min-height: 380px;
         margin: 0;
         padding: 0;
       }
@@ -499,9 +512,12 @@
         border-radius: 0;
         box-shadow: none;
         margin: 0;
+        padding: 0;
       }
 
+      /* El texto fluye abajo de la imagen de forma limpia */
       .hero-copy {
+        grid-area: copy;
         width: min(90%, 390px);
         max-width: 390px;
         margin: 0 auto;
@@ -634,7 +650,7 @@
     <section id="servicios">
       <div class="container section-head"><h2>El costo de la incertidumbre</h2><div class="rule"></div></div>
       <div class="container problem-grid">
-        <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0L20 8l-8-6-8 6Z"/></svg><p>Tu negocio e ingresos dependen enteramente de tu operación diaria.</p></div>
+        <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0L20 8l-8-6-8 6Z"/></svg><p>Tu negocio e ingresos dependen enteramente de tu operation diaria.</p></div>
         <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><p>No existe un plan de contingencia para que tu familia tome decisiones.</p></div>
         <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><p>Las finanzas del negocio corporativo y las personales están mezcladas.</p></div>
         <div class="problem-card"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><p>Falta optimización fiscal legal para robustecer tu flujo y retiro.</p></div>
