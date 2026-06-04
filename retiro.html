@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Retiro | Emmanuel Lara</title>
+
+  <style>
+    :root {
+      --deep-green: #1F2E23;
+      --moss-green: #475940;
+      --warm-ivory: #E9E3D6;
+      --cream: #FAF7F3;
+      --brass: #B79A6B;
+      --white: #FFFFFF;
+      --soft-line: rgba(31,46,35,.16);
+      --shadow: 0 24px 70px rgba(31,46,35,.12);
+      --danger: #B9472B;
+      --warning: #D9862D;
+      --caution: #D4B453;
+      --success: #3D8B5A;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--cream);
+      color: var(--deep-green);
+      line-height: 1.45;
+    }
+
+    .retirement-simulator {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 72px 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 36px;
+      align-items: center;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--moss-green);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--brass);
+      display: inline-block;
+    }
+
+    h1, h2, h3 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 500;
+      letter-spacing: -.02em;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: .92;
+      max-width: 720px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: rgba(31,46,35,.76);
+      max-width: 620px;
+      margin: 22px 0 0;
+    }
+
+    .hero-card {
+      background: var(--deep-green);
+      color: var(--warm-ivory);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(233,227,214,.22);
+      border-radius: 999px;
+      right: -64px;
+      top: -54px;
+    }
+
+    .hero-card strong {
+      color: var(--white);
+    }
+
+    .hero-card .quote {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 34px;
+      line-height: 1.02;
+      max-width: 360px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card .note {
+      color: rgba(233,227,214,.78);
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--soft-line);
+      border-radius: 28px;
+      box-shadow: 0 14px 48px rgba(31,46,35,.08);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 28px 30px 18px;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .panel-header h2 {
+      font-size: 38px;
+      line-height: 1;
+    }
+
+    .panel-header p {
+      color: rgba(31,46,35,.70);
+      margin: 10px 0 0;
+      font-size: 15px;
+    }
+
+    .form {
+      padding: 28px 30px 30px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--moss-green);
+      font-weight: 800;
+      margin: 24px 0 14px;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .hint {
+      color: rgba(31,46,35,.56);
+      font-weight: 500;
+      font-size: 12px;
+      margin-top: -4px;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      border: 1px solid var(--soft-line);
+      border-radius: 14px;
+      padding: 14px 14px;
+      font: inherit;
+      color: var(--deep-green);
+      background: #fff;
+      outline: none;
+      transition: border .2s, box-shadow .2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--brass);
+      box-shadow: 0 0 0 4px rgba(183,154,107,.16);
+    }
+
+    input[type="range"] {
+      padding: 0;
+      accent-color: var(--moss-green);
+    }
+
+    .range-row {
+      display: grid;
+      grid-template-columns: 1fr 64px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .range-value {
+      border: 1px solid var(--soft-line);
+      border-radius: 14px;
+      text-align: center;
+      padding: 10px 6px;
+      font-weight: 800;
+      color: var(--moss-green);
+      background: var(--cream);
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .choice {
+      border: 1px solid var(--soft-line);
+      border-radius: 18px;
+      padding: 13px 12px;
+      cursor: pointer;
+      transition: .2s;
+      background: #fff;
+      min-height: 86px;
+    }
+
+    .choice input {
+      display: none;
+    }
+
+    .choice strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .choice span {
+      display: block;
+      font-size: 12px;
+      color: rgba(31,46,35,.62);
+    }
+
+    .choice:has(input:checked) {
+      border-color: var(--brass);
+      background: rgba(183,154,107,.10);
+      box-shadow: inset 0 0 0 1px var(--brass);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    button, .cta-link {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-weight: 800;
+      cursor: pointer;
+      font: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    button:hover, .cta-link:hover {
+      transform: translateY(-1px);
+    }
+
+    .primary-btn, .cta-link {
+      background: var(--deep-green);
+      color: var(--warm-ivory);
+      box-shadow: 0 12px 30px rgba(31,46,35,.18);
+    }
+
+    .secondary-btn {
+      background: var(--cream);
+      color: var(--deep-green);
+      border: 1px solid var(--soft-line);
+    }
+
+    .result-panel {
+      position: sticky;
+      top: 20px;
+      padding: 28px;
+      background: var(--deep-green);
+      color: var(--warm-ivory);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .result-panel h2 {
+      font-size: 36px;
+      line-height: 1;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .result-panel p {
+      color: rgba(233,227,214,.78);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .score-box {
+      margin: 24px 0;
+      background: rgba(233,227,214,.09);
+      border: 1px solid rgba(233,227,214,.18);
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    .score-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .score {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 58px;
+      line-height: .9;
+      color: #fff;
+    }
+
+    .status {
+      font-weight: 900;
+      font-size: 13px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(183,154,107,.16);
+      color: var(--warm-ivory);
+      white-space: nowrap;
+      border: 1px solid rgba(233,227,214,.18);
+    }
+
+    .status.status-success {
+      background: rgba(61,139,90,.22);
+      color: #FFFFFF;
+      border-color: rgba(61,139,90,.45);
+    }
+
+    .status.status-caution {
+      background: rgba(212,180,83,.25);
+      color: #FFFFFF;
+      border-color: rgba(212,180,83,.48);
+    }
+
+    .status.status-warning {
+      background: rgba(217,134,45,.25);
+      color: #FFFFFF;
+      border-color: rgba(217,134,45,.48);
+    }
+
+    .status.status-danger {
+      background: rgba(185,71,43,.28);
+      color: #FFFFFF;
+      border-color: rgba(185,71,43,.52);
+    }
+
+    .bar {
+      height: 11px;
+      background: rgba(233,227,214,.18);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--brass);
+      border-radius: 999px;
+      transition: width .5s ease, background .3s ease;
+    }
+
+    .metric {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(233,227,214,.13);
+      font-size: 14px;
+    }
+
+    .metric:last-child {
+      border-bottom: none;
+    }
+
+    .metric span:first-child {
+      color: rgba(233,227,214,.74);
+    }
+
+    .metric strong {
+      color: #fff;
+      text-align: right;
+    }
+
+    .recommendation {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 20px;
+      background: var(--warm-ivory);
+      color: var(--deep-green);
+    }
+
+    .recommendation h3 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .recommendation p {
+      color: rgba(31,46,35,.74);
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .recommendation ul {
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(31,46,35,.78);
+      font-size: 14px;
+    }
+
+    .recommendation li {
+      margin: 6px 0;
+    }
+
+    .cta-box {
+      margin-top: 18px;
+    }
+
+    .cta-link {
+      width: 100%;
+      background: var(--brass);
+      color: var(--deep-green);
+    }
+
+    .assumptions {
+      margin-top: 22px;
+      border-top: 1px solid var(--soft-line);
+      padding-top: 22px;
+    }
+
+    details {
+      border: 1px solid var(--soft-line);
+      border-radius: 18px;
+      padding: 15px 16px;
+      background: rgba(250,247,243,.75);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--moss-green);
+    }
+
+    .assumption-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .fineprint {
+      font-size: 12px;
+      color: rgba(31,46,35,.54);
+      margin-top: 16px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      padding: 18px 22px;
+      border: 1px solid var(--soft-line);
+      border-radius: 20px;
+      color: rgba(31,46,35,.68);
+      font-size: 13px;
+      background: rgba(255,255,255,.55);
+    }
+
+    @media (max-width: 960px) {
+      .hero, .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-panel {
+        position: static;
+      }
+
+      .choice-grid, .assumption-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .retirement-simulator {
+        width: min(100% - 22px, 1120px);
+        padding: 38px 0;
+      }
+
+      .hero-card, .panel, .result-panel {
+        border-radius: 22px;
+      }
+
+      .hero-card {
+        min-height: 250px;
+        padding: 24px;
+      }
+
+      .hero-card .quote {
+        font-size: 28px;
+      }
+
+      .panel-header, .form {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .field-grid, .choice-grid, .assumption-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 46px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="retirement-simulator">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Simulador patrimonial</div>
+        <h1>¿Vas en camino al retiro que imaginas?</h1>
+        <p>
+          Obtén una estimación de tu avance, identifica tu posible brecha de retiro
+          y visualiza cuánto tendrías que complementar desde hoy.
+        </p>
+      </div>
+
+      <aside class="hero-card">
+        <div class="quote">
+          No se trata solo de ahorrar más. Se trata de construir una estrategia.
+        </div>
+        <div class="note">
+          Esta herramienta integra AFORE, ahorro propio e inversión complementaria para darte una primera lectura patrimonial.
+        </div>
+      </aside>
+    </section>
+
+    <section class="main-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Tu mapa inicial de retiro</h2>
+          <p>Captura datos aproximados. El objetivo es tener una primera fotografía, no sustituir un diagnóstico financiero completo.</p>
+        </div>
+
+        <form class="form" id="retirementForm">
+          <div class="section-title">1. Horizonte</div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="currentAge">Edad actual</label>
+              <div class="range-row">
+                <input id="currentAge" type="range" min="25" max="65" value="42" />
+                <div class="range-value" id="currentAgeValue">42</div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="retirementAge">Edad deseada de retiro</label>
+              <div class="range-row">
+                <input id="retirementAge" type="range" min="50" max="75" value="65" />
+                <div class="range-value" id="retirementAgeValue">65</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-title">2. Ingreso y estilo de vida</div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="currentIncome">Ingreso mensual actual</label>
+              <div class="hint">Antes de impuestos o aproximado neto, según prefieras usarlo como referencia.</div>
+              <input id="currentIncome" type="text" inputmode="numeric" value="80,000.00" />
+            </div>
+
+            <div class="field">
+              <label for="customRetirementIncome">Ingreso mensual deseado</label>
+              <div class="hint">Se llena solo según el estilo de vida elegido. Puedes editarlo.</div>
+              <input id="customRetirementIncome" type="text" inputmode="numeric" value="56,000.00" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Nivel de vida que te gustaría conservar</label>
+
+            <div class="choice-grid" id="lifestyleChoices">
+              <label class="choice">
+                <input type="radio" name="lifestyle" value="0.50" />
+                <strong>Básico</strong>
+                <span>50% de tu ingreso actual</span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="lifestyle" value="0.70" checked />
+                <strong>Similar</strong>
+                <span>70% de tu ingreso actual</span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="lifestyle" value="0.90" />
+                <strong>Cómodo</strong>
+                <span>90% de tu ingreso actual</span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="lifestyle" value="custom" />
+                <strong>Personalizado</strong>
+                <span>Define tu propio objetivo</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="section-title">3. Lo que ya tienes construido</div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="aforeBalance">Saldo actual en AFORE</label>
+              <input id="aforeBalance" type="text" inputmode="numeric" value="500,000.00" />
+            </div>
+
+            <div class="field">
+              <label for="investmentBalance">Ahorros e inversiones actuales</label>
+              <div class="hint">CETES, fondos, ETFs, acciones, pagarés, etc.</div>
+              <input id="investmentBalance" type="text" inputmode="numeric" value="300,000.00" />
+            </div>
+          </div>
+
+          <div class="section-title">4. Tu esfuerzo actual</div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="monthlySavings">Ahorro o inversión mensual actual</label>
+              <input id="monthlySavings" type="text" inputmode="numeric" value="5,000.00" />
+            </div>
+
+            <div class="field">
+              <label for="monthlyAforeContribution">Aportación mensual estimada a AFORE</label>
+              <div class="hint">Opcional. Si no la conoces, déjala en blanco.</div>
+              <input id="monthlyAforeContribution" type="text" inputmode="numeric" value="" placeholder="Opcional" />
+            </div>
+          </div>
+
+          <div class="assumptions">
+            <details>
+              <summary>Supuestos avanzados</summary>
+
+              <div class="assumption-grid">
+                <div class="field">
+                  <label for="aforeReturn">Rend. real AFORE</label>
+                  <input id="aforeReturn" type="number" step="0.1" value="3.5" />
+                </div>
+
+                <div class="field">
+                  <label for="investmentReturn">Rend. real inversión</label>
+                  <input id="investmentReturn" type="number" step="0.1" value="5.0" />
+                </div>
+
+                <div class="field">
+                  <label for="pprReturn">Rend. real PPR</label>
+                  <input id="pprReturn" type="number" step="0.1" value="5.0" />
+                </div>
+
+                <div class="field">
+                  <label for="withdrawalRate">Tasa de retiro</label>
+                  <input id="withdrawalRate" type="number" step="0.1" value="4.0" />
+                </div>
+              </div>
+
+              <p class="fineprint">
+                Los cálculos están expresados en pesos de hoy y usan rendimientos reales aproximados, es decir,
+                descontando inflación. Puedes ajustar estos supuestos para hacer escenarios conservadores u optimistas.
+              </p>
+            </details>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="primary-btn" id="calculateBtn">Calcular mi avance</button>
+            <button type="button" class="secondary-btn" id="resetBtn">Restablecer ejemplo</button>
+          </div>
+
+<div class="footer-note">
+  <strong>Nota:</strong> Este simulador es una estimación educativa y no constituye asesoría financiera,
+  fiscal, legal, previsional ni recomendación personalizada. Los resultados pueden variar según régimen
+  pensionario, semanas cotizadas, impuestos, comisiones, cambios salariales, perfil de riesgo, inflación
+  y condiciones específicas de productos financieros o aseguradores.
+</div>
+        </form>
+      </div>
+
+      <aside class="result-panel" id="results">
+        <h2>Resultado estimado</h2>
+        <p>Completa tus datos y calcula tu avance hacia el retiro.</p>
+
+        <div class="score-box">
+          <div class="score-top">
+            <div>
+              <div class="score" id="progressScore">0%</div>
+            </div>
+            <div class="status" id="statusLabel">Pendiente</div>
+          </div>
+          <div class="bar"><span id="progressBar"></span></div>
+        </div>
+
+        <div class="metric">
+          <span>Capital objetivo</span>
+          <strong id="targetCapital">$0.00</strong>
+        </div>
+
+        <div class="metric">
+          <span>Capital proyectado</span>
+          <strong id="projectedCapital">$0.00</strong>
+        </div>
+
+        <div class="metric">
+          <span>Brecha estimada</span>
+          <strong id="gapCapital">$0.00</strong>
+        </div>
+
+        <div class="metric">
+          <span>Aportación adicional mensual</span>
+          <strong id="neededContribution">$0.00</strong>
+        </div>
+
+        <div class="recommendation">
+          <h3 id="recommendationTitle">Tu lectura patrimonial</h3>
+          <p id="recommendationText">
+            Este resultado te ayudará a identificar si tu ahorro actual, AFORE e inversiones están alineados con el retiro que deseas.
+          </p>
+
+          <ul>
+            <li>Evaluar si tu ahorro actual es suficiente.</li>
+            <li>Reducir dependencia exclusiva de la AFORE.</li>
+            <li>Complementar con estrategias de largo plazo.</li>
+            <li>Revisar beneficios fiscales disponibles.</li>
+          </ul>
+
+          <div class="cta-box">
+            <a
+              class="cta-link"
+              id="whatsappCta"
+              href="https://wa.me/529991008663?text=Hola%20Emmanuel%2C%20quiero%20revisar%20mi%20estrategia%20de%20retiro."
+              target="_blank"
+              rel="noopener"
+            >
+              Agendar diagnóstico ESCUDO
+            </a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const els = {
+      currentAge: document.getElementById("currentAge"),
+      retirementAge: document.getElementById("retirementAge"),
+      currentAgeValue: document.getElementById("currentAgeValue"),
+      retirementAgeValue: document.getElementById("retirementAgeValue"),
+      currentIncome: document.getElementById("currentIncome"),
+      customRetirementIncome: document.getElementById("customRetirementIncome"),
+      aforeBalance: document.getElementById("aforeBalance"),
+      investmentBalance: document.getElementById("investmentBalance"),
+      monthlySavings: document.getElementById("monthlySavings"),
+      monthlyAforeContribution: document.getElementById("monthlyAforeContribution"),
+      aforeReturn: document.getElementById("aforeReturn"),
+      investmentReturn: document.getElementById("investmentReturn"),
+      pprReturn: document.getElementById("pprReturn"),
+      withdrawalRate: document.getElementById("withdrawalRate"),
+      calculateBtn: document.getElementById("calculateBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      progressScore: document.getElementById("progressScore"),
+      progressBar: document.getElementById("progressBar"),
+      statusLabel: document.getElementById("statusLabel"),
+      targetCapital: document.getElementById("targetCapital"),
+      projectedCapital: document.getElementById("projectedCapital"),
+      gapCapital: document.getElementById("gapCapital"),
+      neededContribution: document.getElementById("neededContribution"),
+      recommendationTitle: document.getElementById("recommendationTitle"),
+      recommendationText: document.getElementById("recommendationText"),
+      whatsappCta: document.getElementById("whatsappCta")
+    };
+
+    function cleanNumber(value) {
+      if (!value) return 0;
+      return Number(String(value).replace(/[^\d.-]/g, "")) || 0;
+    }
+
+    function formatCurrency(value) {
+      const safeValue = Math.max(0, Number(value) || 0);
+      return "$" + new Intl.NumberFormat("es-MX", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(safeValue);
+    }
+
+    function formatNumberInput(value) {
+      const safeValue = Number(value) || 0;
+      return new Intl.NumberFormat("es-MX", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(safeValue);
+    }
+
+    function formatInputAsCurrencyLike(input) {
+      const value = cleanNumber(input.value);
+      input.value = value ? formatNumberInput(value) : "";
+    }
+
+    function numericValue(input) {
+      return cleanNumber(input.value);
+    }
+
+    function futureValueLumpSum(presentValue, annualRealReturn, years) {
+      return presentValue * Math.pow(1 + annualRealReturn, years);
+    }
+
+    function futureValueMonthly(monthlyPayment, annualRealReturn, years) {
+      const monthlyRate = Math.pow(1 + annualRealReturn, 1 / 12) - 1;
+      const months = years * 12;
+
+      if (monthlyPayment <= 0 || months <= 0) return 0;
+      if (monthlyRate === 0) return monthlyPayment * months;
+
+      return monthlyPayment * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+    }
+
+    function requiredMonthlyPayment(futureValueNeeded, annualRealReturn, years) {
+      const monthlyRate = Math.pow(1 + annualRealReturn, 1 / 12) - 1;
+      const months = years * 12;
+
+      if (futureValueNeeded <= 0) return 0;
+      if (months <= 0) return futureValueNeeded;
+      if (monthlyRate === 0) return futureValueNeeded / months;
+
+      return futureValueNeeded * monthlyRate / (Math.pow(1 + monthlyRate, months) - 1);
+    }
+
+    function getLifestyleValue() {
+      return document.querySelector('input[name="lifestyle"]:checked').value;
+    }
+
+    function updateAgeLabels() {
+      els.currentAgeValue.textContent = els.currentAge.value;
+      els.retirementAgeValue.textContent = els.retirementAge.value;
+
+      if (Number(els.retirementAge.value) <= Number(els.currentAge.value)) {
+        els.retirementAge.value = Number(els.currentAge.value) + 1;
+        els.retirementAgeValue.textContent = els.retirementAge.value;
+      }
+    }
+
+    function updateIncomeFromLifestyle() {
+      const selected = getLifestyleValue();
+      const income = numericValue(els.currentIncome);
+
+      if (selected !== "custom") {
+        const target = income * Number(selected);
+        els.customRetirementIncome.value = formatNumberInput(target);
+      }
+    }
+
+    function getStatus(progress) {
+      if (progress >= 80) {
+        return {
+          label: "🟢 Encaminado",
+          cssClass: "status-success",
+          barColor: "var(--success)",
+          title: "Tu estrategia parece encaminada",
+          text: "Con los datos proporcionados, tu proyección se acerca al capital estimado para sostener el retiro deseado. Aun así, conviene validar supuestos, riesgos y eficiencia fiscal."
+        };
+      }
+
+      if (progress >= 60) {
+        return {
+          label: "🟡 Requiere ajustes",
+          cssClass: "status-caution",
+          barColor: "var(--caution)",
+          title: "Tu estrategia requiere ajustes",
+          text: "La proyección muestra una brecha manejable. Podría cerrarse con mayor disciplina de ahorro, optimización fiscal o una estrategia complementaria de largo plazo."
+        };
+      }
+
+      if (progress >= 40) {
+        return {
+          label: "🟠 Brecha relevante",
+          cssClass: "status-warning",
+          barColor: "var(--warning)",
+          title: "Existe una brecha relevante",
+          text: "Con la información proporcionada, tu ahorro actual podría no ser suficiente para sostener el nivel de vida que deseas. Es buen momento para revisar alternativas complementarias."
+        };
+      }
+
+      return {
+        label: "🔴 Riesgo importante",
+        cssClass: "status-danger",
+        barColor: "var(--danger)",
+        title: "Tu retiro necesita atención",
+        text: "La proyección muestra una distancia importante frente al capital objetivo. Conviene construir una estrategia que combine ahorro, protección, inversión y planeación fiscal."
+      };
+    }
+
+    function calculate() {
+      updateAgeLabels();
+
+      const currentAge = Number(els.currentAge.value);
+      const retirementAge = Number(els.retirementAge.value);
+      const years = Math.max(1, retirementAge - currentAge);
+
+      const desiredMonthlyIncome = numericValue(els.customRetirementIncome);
+      const aforeBalance = numericValue(els.aforeBalance);
+      const investmentBalance = numericValue(els.investmentBalance);
+      const monthlySavings = numericValue(els.monthlySavings);
+      const monthlyAforeContribution = numericValue(els.monthlyAforeContribution);
+
+      const aforeReturn = Number(els.aforeReturn.value) / 100;
+      const investmentReturn = Number(els.investmentReturn.value) / 100;
+      const pprReturn = Number(els.pprReturn.value) / 100;
+      const withdrawalRate = Number(els.withdrawalRate.value) / 100;
+
+      const targetCapital = desiredMonthlyIncome * 12 / withdrawalRate;
+
+      const projectedAfore =
+        futureValueLumpSum(aforeBalance, aforeReturn, years) +
+        futureValueMonthly(monthlyAforeContribution, aforeReturn, years);
+
+      const projectedInvestments =
+        futureValueLumpSum(investmentBalance, investmentReturn, years) +
+        futureValueMonthly(monthlySavings, investmentReturn, years);
+
+      const projectedCapital = projectedAfore + projectedInvestments;
+      const gap = Math.max(0, targetCapital - projectedCapital);
+      const neededMonthly = requiredMonthlyPayment(gap, pprReturn, years);
+
+      const progress = targetCapital > 0 ? Math.min(100, Math.round((projectedCapital / targetCapital) * 100)) : 0;
+      const status = getStatus(progress);
+
+      els.progressScore.textContent = progress + "%";
+      els.progressBar.style.width = progress + "%";
+      els.progressBar.style.background = status.barColor;
+      els.statusLabel.textContent = status.label;
+      els.statusLabel.className = "status " + status.cssClass;
+
+      els.targetCapital.textContent = formatCurrency(targetCapital);
+      els.projectedCapital.textContent = formatCurrency(projectedCapital);
+      els.gapCapital.textContent = formatCurrency(gap);
+      els.neededContribution.textContent = formatCurrency(neededMonthly);
+
+      els.recommendationTitle.textContent = status.title;
+      els.recommendationText.textContent = status.text;
+
+      const msg = `Hola Emmanuel, hice el simulador de retiro y quiero revisar mi estrategia. Mi avance estimado fue ${progress}%, mi brecha estimada fue de ${formatCurrency(gap)} y la aportación adicional mensual sugerida fue de ${formatCurrency(neededMonthly)}.`;
+      els.whatsappCta.href = `https://wa.me/529991008663?text=${encodeURIComponent(msg)}`;
+    }
+
+    function resetExample() {
+      els.currentAge.value = 42;
+      els.retirementAge.value = 65;
+      els.currentIncome.value = "80,000.00";
+      els.customRetirementIncome.value = "56,000.00";
+      els.aforeBalance.value = "500,000.00";
+      els.investmentBalance.value = "300,000.00";
+      els.monthlySavings.value = "5,000.00";
+      els.monthlyAforeContribution.value = "";
+      els.aforeReturn.value = 3.5;
+      els.investmentReturn.value = 5.0;
+      els.pprReturn.value = 5.0;
+      els.withdrawalRate.value = 4.0;
+      document.querySelector('input[name="lifestyle"][value="0.70"]').checked = true;
+      updateAgeLabels();
+      calculate();
+    }
+
+    [els.currentAge, els.retirementAge].forEach(input => {
+      input.addEventListener("input", () => {
+        updateAgeLabels();
+        calculate();
+      });
+    });
+
+    [els.currentIncome].forEach(input => {
+      input.addEventListener("input", updateIncomeFromLifestyle);
+      input.addEventListener("blur", () => {
+        formatInputAsCurrencyLike(input);
+        updateIncomeFromLifestyle();
+        calculate();
+      });
+    });
+
+    [
+      els.customRetirementIncome,
+      els.aforeBalance,
+      els.investmentBalance,
+      els.monthlySavings,
+      els.monthlyAforeContribution
+    ].forEach(input => {
+      input.addEventListener("blur", () => {
+        formatInputAsCurrencyLike(input);
+        calculate();
+      });
+      input.addEventListener("input", calculate);
+    });
+
+    [
+      els.aforeReturn,
+      els.investmentReturn,
+      els.pprReturn,
+      els.withdrawalRate
+    ].forEach(input => input.addEventListener("input", calculate));
+
+    document.querySelectorAll('input[name="lifestyle"]').forEach(radio => {
+      radio.addEventListener("change", () => {
+        updateIncomeFromLifestyle();
+        calculate();
+      });
+    });
+
+    els.customRetirementIncome.addEventListener("focus", () => {
+      document.querySelector('input[name="lifestyle"][value="custom"]').checked = true;
+    });
+
+    els.calculateBtn.addEventListener("click", calculate);
+    els.resetBtn.addEventListener("click", resetExample);
+
+    updateAgeLabels();
+    updateIncomeFromLifestyle();
+    calculate();
+  </script>
+</body>
+</html>
