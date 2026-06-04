@@ -228,6 +228,40 @@
       box-shadow: 0 0 0 4px rgba(183,154,107,.16);
     }
 
+    input.input-error {
+      border-color: var(--danger) !important;
+      box-shadow: 0 0 0 4px rgba(185,71,43,.12) !important;
+    }
+
+    input[readonly] {
+      background: rgba(250,247,243,.88);
+      color: rgba(31,46,35,.72);
+      cursor: not-allowed;
+    }
+
+    .field-error {
+      display: none;
+      margin-top: 7px;
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .field-error.is-visible {
+      display: block;
+    }
+
+    .input-pulse {
+      animation: inputPulse .42s ease;
+    }
+
+    @keyframes inputPulse {
+      0% { box-shadow: 0 0 0 0 rgba(183,154,107,.00); }
+      45% { box-shadow: 0 0 0 5px rgba(183,154,107,.18); }
+      100% { box-shadow: 0 0 0 0 rgba(183,154,107,.00); }
+    }
+
     input[type="range"] {
       padding: 0;
       accent-color: var(--moss-green);
@@ -585,10 +619,126 @@
         font-size: 46px;
       }
     }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 32px 16px 24px;
+    }
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      opacity: .7;
+    }
+    .empty-msg {
+      color: rgba(233,227,214,.68);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    /* ── Tooltip AFORE ── */
+    .tooltip-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: rgba(183,154,107,.22);
+      color: var(--brass);
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(183,154,107,.40);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .tooltip-box {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--deep-green);
+      color: var(--warm-ivory);
+      font-size: 12px;
+      font-weight: 400;
+      padding: 10px 13px;
+      border-radius: 12px;
+      width: 220px;
+      z-index: 99;
+      box-shadow: 0 8px 24px rgba(31,46,35,.28);
+      white-space: normal;
+      pointer-events: none;
+      line-height: 1.5;
+    }
+    .tooltip-box strong {
+      color: var(--brass);
+    }
+    .tooltip-trigger:hover .tooltip-box,
+    .tooltip-trigger:focus .tooltip-box {
+      display: block;
+    }
+
+    /* ── Mobile floating bar ── */
+    .mobile-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--deep-green);
+      color: var(--warm-ivory);
+      padding: 12px 20px;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 -4px 24px rgba(31,46,35,.22);
+      border-top: 1px solid rgba(233,227,214,.12);
+    }
+    .mobile-bar-score {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 28px;
+      line-height: 1;
+      color: #fff;
+      min-width: 52px;
+    }
+    .mobile-bar-label {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(233,227,214,.85);
+    }
+    .mobile-bar-cta {
+      background: var(--brass);
+      color: var(--deep-green);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    @media (max-width: 960px) {
+      .mobile-bar:not(.hidden) {
+        display: flex;
+      }
+      .retirement-simulator {
+        padding-bottom: 80px;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <!-- Mobile sticky summary bar -->
+  <div class="mobile-bar hidden" id="mobileBar">
+    <div class="mobile-bar-score" id="mobileBarScore">0%</div>
+    <div class="mobile-bar-label" id="mobileBarLabel">Pendiente</div>
+    <a href="#results" class="mobile-bar-cta">Ver detalle ↓</a>
+  </div>
+
   <main class="retirement-simulator">
     <section class="hero">
       <div>
@@ -644,13 +794,15 @@
             <div class="field">
               <label for="currentIncome">Ingreso mensual actual</label>
               <div class="hint">Antes de impuestos o aproximado neto, según prefieras usarlo como referencia.</div>
-              <input id="currentIncome" type="text" inputmode="numeric" value="80,000.00" />
+              <input id="currentIncome" type="text" inputmode="numeric" value="" placeholder="Ej. 80,000" />
+              <div class="field-error" id="currentIncomeError">Captura tu ingreso mensual actual para calcular un objetivo de retiro.</div>
             </div>
 
             <div class="field">
               <label for="customRetirementIncome">Ingreso mensual deseado</label>
-              <div class="hint">Se llena solo según el estilo de vida elegido. Puedes editarlo.</div>
-              <input id="customRetirementIncome" type="text" inputmode="numeric" value="56,000.00" />
+              <div class="hint" id="retirementIncomeHint">Calculado automáticamente según tu nivel de vida seleccionado.</div>
+              <input id="customRetirementIncome" type="text" inputmode="numeric" value="" placeholder="Se calcula automáticamente" readonly />
+              <div class="field-error" id="retirementIncomeError">Define tu ingreso mensual deseado para el retiro.</div>
             </div>
           </div>
 
@@ -688,14 +840,20 @@
 
           <div class="field-grid">
             <div class="field">
-              <label for="aforeBalance">Saldo actual en AFORE</label>
-              <input id="aforeBalance" type="text" inputmode="numeric" value="500,000.00" />
+              <label for="aforeBalance">
+                Saldo actual en AFORE
+                <span class="tooltip-trigger" tabindex="0" aria-label="¿Cómo consultar mi saldo AFORE?">?
+                  <span class="tooltip-box">Consulta tu saldo en la app de tu AFORE, en el portal <strong>e-sar.com.mx</strong> o llamando al INFOSAR: <strong>800 500 7274</strong>.</span>
+                </span>
+              </label>
+              <input id="aforeBalance" type="text" inputmode="numeric" value="" placeholder="Ej. 250,000" />
+              <div class="field-error" id="capitalDataError">Captura al menos un dato de AFORE, inversión o ahorro mensual.</div>
             </div>
 
             <div class="field">
               <label for="investmentBalance">Ahorros e inversiones actuales</label>
               <div class="hint">CETES, fondos, ETFs, acciones, pagarés, etc.</div>
-              <input id="investmentBalance" type="text" inputmode="numeric" value="300,000.00" />
+              <input id="investmentBalance" type="text" inputmode="numeric" value="" placeholder="Ej. 100,000" />
             </div>
           </div>
 
@@ -704,7 +862,7 @@
           <div class="field-grid">
             <div class="field">
               <label for="monthlySavings">Ahorro o inversión mensual actual</label>
-              <input id="monthlySavings" type="text" inputmode="numeric" value="5,000.00" />
+              <input id="monthlySavings" type="text" inputmode="numeric" value="" placeholder="Ej. 3,000" />
             </div>
 
             <div class="field">
@@ -748,8 +906,8 @@
           </div>
 
           <div class="actions">
-            <button type="button" class="primary-btn" id="calculateBtn">Calcular mi avance</button>
-            <button type="button" class="secondary-btn" id="resetBtn">Restablecer ejemplo</button>
+            <button type="button" class="primary-btn" id="calculateBtn">Ver mi resultado →</button>
+            <button type="button" class="secondary-btn" id="resetBtn">Cargar ejemplo</button>
           </div>
 
 <div class="footer-note">
@@ -763,7 +921,14 @@
 
       <aside class="result-panel" id="results">
         <h2>Resultado estimado</h2>
-        <p>Completa tus datos y calcula tu avance hacia el retiro.</p>
+        <p>Completa tus datos y presiona <em>Ver mi resultado</em>.</p>
+
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">📊</div>
+          <p class="empty-msg">Aún no hay datos suficientes para proyectar tu retiro.<br>Llena tu ingreso deseado y al menos un dato de ahorro, inversión o AFORE.</p>
+        </div>
+
+        <div class="result-content hidden" id="resultContent">
 
         <div class="score-box">
           <div class="score-top">
@@ -801,7 +966,7 @@
             Este resultado te ayudará a identificar si tu ahorro actual, AFORE e inversiones están alineados con el retiro que deseas.
           </p>
 
-          <ul>
+          <ul id="recommendationBullets">
             <li>Evaluar si tu ahorro actual es suficiente.</li>
             <li>Reducir dependencia exclusiva de la AFORE.</li>
             <li>Complementar con estrategias de largo plazo.</li>
@@ -816,10 +981,11 @@
               target="_blank"
               rel="noopener"
             >
-              Agendar diagnóstico
+              Agendar diagnóstico ESCUDO
             </a>
           </div>
         </div>
+        </div><!-- /result-content -->
       </aside>
     </section>
   </main>
@@ -851,7 +1017,17 @@
       neededContribution: document.getElementById("neededContribution"),
       recommendationTitle: document.getElementById("recommendationTitle"),
       recommendationText: document.getElementById("recommendationText"),
-      whatsappCta: document.getElementById("whatsappCta")
+      whatsappCta: document.getElementById("whatsappCta"),
+      emptyState: document.getElementById("emptyState"),
+      resultContent: document.getElementById("resultContent"),
+      recommendationBullets: document.getElementById("recommendationBullets"),
+      mobileBar: document.getElementById("mobileBar"),
+      mobileBarScore: document.getElementById("mobileBarScore"),
+      mobileBarLabel: document.getElementById("mobileBarLabel"),
+      currentIncomeError: document.getElementById("currentIncomeError"),
+      retirementIncomeError: document.getElementById("retirementIncomeError"),
+      capitalDataError: document.getElementById("capitalDataError"),
+      retirementIncomeHint: document.getElementById("retirementIncomeHint")
     };
 
     function cleanNumber(value) {
@@ -913,6 +1089,56 @@
       return document.querySelector('input[name="lifestyle"]:checked').value;
     }
 
+    function getMoneyInputs() {
+      return [
+        els.currentIncome,
+        els.customRetirementIncome,
+        els.aforeBalance,
+        els.investmentBalance,
+        els.monthlySavings,
+        els.monthlyAforeContribution
+      ];
+    }
+
+    function clearValidationState() {
+      [
+        els.currentIncome,
+        els.customRetirementIncome,
+        els.aforeBalance,
+        els.investmentBalance,
+        els.monthlySavings,
+        els.monthlyAforeContribution
+      ].forEach(input => input.classList.remove("input-error"));
+
+      [
+        els.currentIncomeError,
+        els.retirementIncomeError,
+        els.capitalDataError
+      ].forEach(error => {
+        if (error) error.classList.remove("is-visible");
+      });
+    }
+
+    function markError(input, errorEl) {
+      if (input) input.classList.add("input-error");
+      if (errorEl) errorEl.classList.add("is-visible");
+    }
+
+    function focusFirstInvalidField(fields) {
+      const first = fields.find(Boolean);
+      if (!first) return;
+
+      first.focus({ preventScroll: true });
+      first.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function pulseInput(input) {
+      if (!input) return;
+      input.classList.remove("input-pulse");
+      void input.offsetWidth;
+      input.classList.add("input-pulse");
+    }
+
     function updateAgeLabels() {
       els.currentAgeValue.textContent = els.currentAge.value;
       els.retirementAgeValue.textContent = els.retirementAge.value;
@@ -923,13 +1149,31 @@
       }
     }
 
-    function updateIncomeFromLifestyle() {
+    function updateIncomeFromLifestyle(shouldPulse = false) {
       const selected = getLifestyleValue();
       const income = numericValue(els.currentIncome);
 
-      if (selected !== "custom") {
-        const target = income * Number(selected);
-        els.customRetirementIncome.value = formatNumberInput(target);
+      if (selected === "custom") {
+        els.customRetirementIncome.removeAttribute("readonly");
+        els.customRetirementIncome.placeholder = "Ej. 50,000";
+        els.retirementIncomeHint.textContent = "Captura manualmente el ingreso mensual que deseas recibir durante el retiro.";
+        return;
+      }
+
+      els.customRetirementIncome.setAttribute("readonly", "readonly");
+      els.customRetirementIncome.placeholder = "Se calcula automáticamente";
+      els.retirementIncomeHint.textContent = "Calculado automáticamente según tu nivel de vida seleccionado.";
+
+      if (income <= 0) {
+        els.customRetirementIncome.value = "";
+        return;
+      }
+
+      const target = income * Number(selected);
+      els.customRetirementIncome.value = formatNumberInput(target);
+
+      if (shouldPulse) {
+        pulseInput(els.customRetirementIncome);
       }
     }
 
@@ -940,7 +1184,13 @@
           cssClass: "status-success",
           barColor: "var(--success)",
           title: "Tu estrategia parece encaminada",
-          text: "Con los datos proporcionados, tu proyección se acerca al capital estimado para sostener el retiro deseado. Aun así, conviene validar supuestos, riesgos y eficiencia fiscal."
+          text: "Con los datos proporcionados, tu proyección se acerca al capital estimado para sostener el retiro deseado. Aun así, conviene validar supuestos, riesgos y eficiencia fiscal.",
+          bullets: [
+            "Mantén la disciplina de ahorro que ya tienes.",
+            "Revisa la eficiencia fiscal de tus instrumentos.",
+            "Considera diversificar entre AFORE, PPR y ETFs.",
+            "Actualiza este cálculo cada año o ante cambios de ingreso."
+          ]
         };
       }
 
@@ -950,7 +1200,13 @@
           cssClass: "status-caution",
           barColor: "var(--caution)",
           title: "Tu estrategia requiere ajustes",
-          text: "La proyección muestra una brecha manejable. Podría cerrarse con mayor disciplina de ahorro, optimización fiscal o una estrategia complementaria de largo plazo."
+          text: "La proyección muestra una brecha manejable. Podría cerrarse con mayor disciplina de ahorro, optimización fiscal o una estrategia complementaria de largo plazo.",
+          bullets: [
+            "Incrementa gradualmente tu ahorro mensual.",
+            "Explora el beneficio fiscal de un PPR (Plan Personal de Retiro).",
+            "Revisa si tu AFORE tiene la SIEFORE adecuada a tu edad.",
+            "Una estrategia complementaria puede cerrar la brecha con mayor rapidez."
+          ]
         };
       }
 
@@ -960,7 +1216,13 @@
           cssClass: "status-warning",
           barColor: "var(--warning)",
           title: "Existe una brecha relevante",
-          text: "Con la información proporcionada, tu ahorro actual podría no ser suficiente para sostener el nivel de vida que deseas. Es buen momento para revisar alternativas complementarias."
+          text: "Con la información proporcionada, tu ahorro actual podría no ser suficiente para sostener el nivel de vida que deseas. Es buen momento para revisar alternativas complementarias.",
+          bullets: [
+            "Evalúa reducir la dependencia exclusiva de tu AFORE.",
+            "Incorpora aportaciones voluntarias o un PPR deducible.",
+            "Define un nivel de retiro alcanzable y trabaja hacia él.",
+            "Inicia cuanto antes: cada año que pasa reduce el margen de maniobra."
+          ]
         };
       }
 
@@ -969,12 +1231,31 @@
         cssClass: "status-danger",
         barColor: "var(--danger)",
         title: "Tu retiro necesita atención",
-        text: "La proyección muestra una distancia importante frente al capital objetivo. Conviene construir una estrategia que combine ahorro, protección, inversión y planeación fiscal."
+        text: "La proyección muestra una distancia importante frente al capital objetivo. Conviene construir una estrategia que combine ahorro, protección, inversión y planeación fiscal.",
+        bullets: [
+          "Es momento de construir una estrategia desde cero.",
+          "Combina ahorro sistemático, protección patrimonial e inversión.",
+          "Un PPR puede darte ventaja fiscal mientras construyes capital.",
+          "Agenda un diagnóstico para revisar opciones concretas a tu medida."
+        ]
       };
     }
 
-    function calculate() {
+    function showEmptyState() {
+      els.emptyState.classList.remove("hidden");
+      els.resultContent.classList.add("hidden");
+      els.mobileBar.classList.add("hidden");
+    }
+
+    function showResults() {
+      els.emptyState.classList.add("hidden");
+      els.resultContent.classList.remove("hidden");
+    }
+
+    function calculate(options = {}) {
+      const shouldValidate = options.validate === true;
       updateAgeLabels();
+      clearValidationState();
 
       const currentAge = Number(els.currentAge.value);
       const retirementAge = Number(els.retirementAge.value);
@@ -985,6 +1266,46 @@
       const investmentBalance = numericValue(els.investmentBalance);
       const monthlySavings = numericValue(els.monthlySavings);
       const monthlyAforeContribution = numericValue(els.monthlyAforeContribution);
+
+      // Require a retirement income target and at least one capital/savings input
+      const hasTarget = desiredMonthlyIncome > 0;
+      const hasCapitalData =
+        aforeBalance > 0 ||
+        investmentBalance > 0 ||
+        monthlySavings > 0 ||
+        monthlyAforeContribution > 0;
+
+      if (!hasTarget || !hasCapitalData) {
+        showEmptyState();
+
+        if (shouldValidate) {
+          const invalidFields = [];
+
+          if (!hasTarget) {
+            const lifestyle = getLifestyleValue();
+
+            if (lifestyle === "custom") {
+              markError(els.customRetirementIncome, els.retirementIncomeError);
+              invalidFields.push(els.customRetirementIncome);
+            } else {
+              markError(els.currentIncome, els.currentIncomeError);
+              invalidFields.push(els.currentIncome);
+            }
+          }
+
+          if (!hasCapitalData) {
+            [els.aforeBalance, els.investmentBalance, els.monthlySavings].forEach(input => {
+              input.classList.add("input-error");
+            });
+            if (els.capitalDataError) els.capitalDataError.classList.add("is-visible");
+            invalidFields.push(els.aforeBalance);
+          }
+
+          focusFirstInvalidField(invalidFields);
+        }
+
+        return false;
+      }
 
       const aforeReturn = Number(els.aforeReturn.value) / 100;
       const investmentReturn = Number(els.investmentReturn.value) / 100;
@@ -1008,6 +1329,8 @@
       const progress = targetCapital > 0 ? Math.min(100, Math.round((projectedCapital / targetCapital) * 100)) : 0;
       const status = getStatus(progress);
 
+      showResults();
+
       els.progressScore.textContent = progress + "%";
       els.progressBar.style.width = progress + "%";
       els.progressBar.style.background = status.barColor;
@@ -1022,8 +1345,21 @@
       els.recommendationTitle.textContent = status.title;
       els.recommendationText.textContent = status.text;
 
+      // Dynamic bullets
+      if (els.recommendationBullets && status.bullets) {
+        els.recommendationBullets.innerHTML = status.bullets
+          .map(b => `<li>${b}</li>`)
+          .join("");
+      }
+
+      // Mobile bar
+      els.mobileBarScore.textContent = progress + "%";
+      els.mobileBarLabel.textContent = status.label;
+      els.mobileBar.classList.remove("hidden");
+
       const msg = `Hola Emmanuel, hice el simulador de retiro y quiero revisar mi estrategia. Mi avance estimado fue ${progress}%, mi brecha estimada fue de ${formatCurrency(gap)} y la aportación adicional mensual sugerida fue de ${formatCurrency(neededMonthly)}.`;
       els.whatsappCta.href = `https://wa.me/529991008663?text=${encodeURIComponent(msg)}`;
+      return true;
     }
 
     function resetExample() {
@@ -1051,13 +1387,15 @@
       });
     });
 
-    [els.currentIncome].forEach(input => {
-      input.addEventListener("input", updateIncomeFromLifestyle);
-      input.addEventListener("blur", () => {
-        formatInputAsCurrencyLike(input);
-        updateIncomeFromLifestyle();
-        calculate();
-      });
+    els.currentIncome.addEventListener("input", () => {
+      updateIncomeFromLifestyle(true);
+      calculate();
+    });
+
+    els.currentIncome.addEventListener("blur", () => {
+      formatInputAsCurrencyLike(els.currentIncome);
+      updateIncomeFromLifestyle(true);
+      calculate();
     });
 
     [
@@ -1071,7 +1409,10 @@
         formatInputAsCurrencyLike(input);
         calculate();
       });
-      input.addEventListener("input", calculate);
+
+      input.addEventListener("input", () => {
+        calculate();
+      });
     });
 
     [
@@ -1083,21 +1424,34 @@
 
     document.querySelectorAll('input[name="lifestyle"]').forEach(radio => {
       radio.addEventListener("change", () => {
-        updateIncomeFromLifestyle();
+        updateIncomeFromLifestyle(true);
         calculate();
       });
     });
 
     els.customRetirementIncome.addEventListener("focus", () => {
-      document.querySelector('input[name="lifestyle"][value="custom"]').checked = true;
+      if (els.customRetirementIncome.hasAttribute("readonly")) {
+        document.querySelector('input[name="lifestyle"][value="custom"]').checked = true;
+        updateIncomeFromLifestyle();
+      }
     });
 
-    els.calculateBtn.addEventListener("click", calculate);
+    els.calculateBtn.addEventListener("click", () => {
+      const didCalculate = calculate({ validate: true });
+
+      if (didCalculate) {
+        // Scroll to results panel after a short delay to let DOM update
+        setTimeout(() => {
+          document.getElementById("results").scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 80);
+      }
+    });
     els.resetBtn.addEventListener("click", resetExample);
 
     updateAgeLabels();
     updateIncomeFromLifestyle();
-    calculate();
+    // Don't auto-calculate on load — show empty state
+    showEmptyState();
   </script>
 </body>
 </html>
